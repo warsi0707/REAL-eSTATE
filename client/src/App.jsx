@@ -20,6 +20,7 @@ import { AdminAuthContext } from './Components/hooks/AdminAuth'
 import DetailProperty from './Components/property/DetailProperty'
 import { UserAuthConext } from './Components/hooks/UserAuth'
 import ErrorPage from './Components/navbar/ErrorPage'
+import NotFound from './Components/navbar/NotFound'
 
 function App() {
   const { isAdmin} = useContext(AdminAuthContext);
@@ -46,7 +47,7 @@ function App() {
           <Route path='/admin/properties' element={<><AdminNavbar/><AdminProperties/></>} errorElement={<ErrorPage/>}/>
           <Route path='/admin/properties/:id' element={<><AdminNavbar/><PropertyDetails/></>  } errorElement={<ErrorPage/>}/>
           <Route path='/admin/users' element={<><AdminNavbar/><UsersDetails/></> } errorElement={<ErrorPage/>}/>
-          <Route path='*' element={<ErrorPage/>}/>
+          <Route path='*' element={<NotFound/>}/>
         </Routes>
       </AdminAuth> 
     
