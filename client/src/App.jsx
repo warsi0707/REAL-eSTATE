@@ -20,14 +20,14 @@ import { AdminAuthContext } from './Components/hooks/AdminAuth'
 import DetailProperty from './Components/property/DetailProperty'
 import { UserAuthConext } from './Components/hooks/UserAuth'
 import ErrorPage from './Components/navbar/ErrorPage'
-import { HashRouter } from 'react-router-dom'
+
 function App() {
   const { isAdmin} = useContext(AdminAuthContext);
   const { isAuthenticated } = useContext(UserAuthConext)
   return (
 
     <>
-    <HashRouter>
+    <Router>
       <UserAuth>
         <Routes>
           <Route path='/' element={<><Navbars/><Home/></> } errorElement={<ErrorPage/>} />
@@ -50,7 +50,7 @@ function App() {
         </Routes>
       </AdminAuth> 
     
-    </HashRouter>
+    </Router>
     <Footer/>
      
     </>
