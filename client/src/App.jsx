@@ -1,7 +1,7 @@
 import { BrowserRouter as Router,Route,Routes, Navigate, replace } from 'react-router-dom'
 // import './App.css'
 import Home from './Components/property/Home'
-import Navbars from './Components/Navbar/Navbar'
+import Navbars from './Components/navbar/Navbar'
 import Login from './Components/forms/login'
 import Signup from './Components/forms/Signup'
 import Footer from './Components/navbar/Footer'
