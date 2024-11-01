@@ -22,14 +22,14 @@ app.use(cors({
 }))
 
 
+app.get("*",(req, res) =>{
+    res.sendFile(path.join(__dirname,'client/dist','index.html'))
+})
 
 app.use("/api/admin",adminRoute)
 app.use("/api/property", propertyRoute)
 app.use("/api/user", userRouter)
 
-app.get("*",(req, res) =>{
-    res.sendFile(path.join(__dirname,'client/dist','index.html'))
-})
 
 const Main =async()=>{
     try{
