@@ -10,7 +10,7 @@ export default function AdminProperties() {
 
   const GetProperties = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/property", {
+      const response = await fetch("https://real-estate-be-5852.onrender.com/api/property", {
         method: "GET",
         credentials: "include",
       });
@@ -24,7 +24,7 @@ export default function AdminProperties() {
   };
   const DeleteProperty = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/property/${id}`, {
+      const response = await fetch(`https://real-estate-be-5852.onrender.com/api/property/${id}`, {
         method: "DELETE",
         credentials: "include",
       });

@@ -14,7 +14,7 @@ export default function Signup() {
   const Signup = async (e) => {
     try {
       e.preventDefault();
-      const response = await fetch("http://localhost:3000/api/user/signup", {
+      const response = await fetch("https://real-estate-be-5852.onrender.com/api/user/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

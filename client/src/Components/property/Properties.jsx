@@ -7,7 +7,7 @@ export default function Properties() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const GetProperties = async () => {
-    const response = await fetch("http://localhost:3000/api/property", {
+    const response = await fetch("https://real-estate-be-5852.onrender.com/api/property", {
       method: "GET",
     });
     const result = await response.json();

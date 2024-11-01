@@ -14,7 +14,7 @@ export default function UsersDetails() {
   const [error, setError] = useState("")
   const GetUsers = async () => {
     try{
-      const response = await fetch("http://localhost:3000/api/admin/users", {
+      const response = await fetch("https://real-estate-be-5852.onrender.com/api/admin/users", {
         method: "GET",
         credentials: "include",
       });

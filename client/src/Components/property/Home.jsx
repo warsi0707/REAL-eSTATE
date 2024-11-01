@@ -12,7 +12,7 @@ export default function Home() {
 
   const GetData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/property/item");
+      const response = await fetch("https://real-estate-be-5852.onrender.com/api/property/item");
       const result = await response.json();
       setLodading(true);
       if (response.ok) {

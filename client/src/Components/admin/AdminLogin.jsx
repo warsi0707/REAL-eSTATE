@@ -14,7 +14,7 @@ export default function AdminLogin() {
   const AdminLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/api/admin/signin", {
+      const response = await fetch("https://real-estate-be-5852.onrender.com/api/admin/signin", {
         method: "POST",
         credentials: "include",
         headers: {

@@ -8,7 +8,7 @@ export default function PropertyDetails() {
   const { id } = useParams();
   const GetData = async () => {
     try{
-        const response = await fetch(`http://localhost:3000/api/property/${id}`, {
+        const response = await fetch(`https://real-estate-be-5852.onrender.com/api/property/${id}`, {
             method: "GET",
             credentials: "include",
           });

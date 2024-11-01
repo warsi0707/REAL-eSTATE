@@ -11,7 +11,7 @@ export default function AdminNavbar() {
 
   const Logout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/admin/logout", {
+      const response = await fetch("https://real-estate-be-5852.onrender.com/api/admin/logout", {
         method: "POST",
         credentials: "include",
       });

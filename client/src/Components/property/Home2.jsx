@@ -11,7 +11,7 @@ export default function Home2() {
     try {
       e.preventDefault();
       const response = await fetch(
-        `http://localhost:3000/api/property/search?query=${query}`,
+        `https://real-estate-be-5852.onrender.com/api/property/search?query=${query}`,
         {
           method: "GET",
         }

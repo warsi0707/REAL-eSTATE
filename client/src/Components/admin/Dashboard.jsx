@@ -10,7 +10,7 @@ export default function Dashboard() {
   const Dashboard = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/admin/dashboard",
+        "https://real-estate-be-5852.onrender.com/api/admin/dashboard",
         {
           method: "GET",
           credentials: "include",
