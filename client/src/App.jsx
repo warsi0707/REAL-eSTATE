@@ -2,7 +2,7 @@ import { BrowserRouter as Router,Route,Routes, Navigate, replace } from 'react-r
 // import './App.css'
 import Home from './Components/property/Home'
 import Navbars from './Components/navbar/Navbar'
-import Login from './Components/forms/login'
+import Login from './Components/forms/Login'
 import Signup from './Components/forms/Signup'
 import Footer from './Components/navbar/Footer'
 import Properties from './Components/property/Properties'
