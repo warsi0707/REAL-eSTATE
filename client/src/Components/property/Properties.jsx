@@ -19,6 +19,7 @@ export default function Properties() {
       setProperty(result.properties);
     } else {
       setError(result.message);
+      setLodading(false)
     }
   };
   useEffect(() => {
