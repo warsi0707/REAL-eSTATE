@@ -16,9 +16,9 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: ["https://real-estate-2oiv.onrender.com"],
+    origin: "https://real-estate-2oiv.onrender.com",
     // origin: [" http://localhost:5173"],
-    methods: ['GET,POST,PUT,DELETE'],
+    methods: ["GET","POST","PUT","DELETE"],
     credentials: true
 }))
 
@@ -27,7 +27,7 @@ app.use("/api/property", propertyRoute)
 app.use("/api/user", userRouter)
 
 app.get("*",(req, res) =>{
-    res.sendFile(path.join(__dirname,'client','build','index.html'))
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
 })
 
 const Main =async()=>{
