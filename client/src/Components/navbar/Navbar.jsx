@@ -30,7 +30,7 @@ export default function Navbars() {
         setMessage(result.message);
         setError("");
         setTimeout(() => {
-          navigate("/#");
+          navigate("/");
           setMessage("");
         }, 2000);
       } else {
