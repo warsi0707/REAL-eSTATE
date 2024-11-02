@@ -31,7 +31,7 @@ function App() {
     <HashRouter>
       <UserAuth>
         <Routes>
-          <Route path='/' element={<><Navbars/><Home/></> } />
+          <Route exact path='/'  element={<><Navbars/><Home/></> } />
           <Route path='/login' element={<><Navbars/><Login/></>}/>
           <Route path='/signup' element={<><Navbars/><Signup/></>}/>
           <Route path='/add' element={isAuthenticated?<> <AdminNavbar/><AddProperty/> </>: <Navigate to="/login"/>}/>
@@ -42,8 +42,8 @@ function App() {
       
       <AdminAuth>
         <Routes>
-          <Route path='/dashboard' element={isAdmin?<><AdminNavbar/><Dashboard/></>: (<Navigate to="/admin/login"/>)}/>
-          <Route path='/admin/login' element={!isAdmin?<> <AdminNavbar/><AdminLogin/> </>: <Navigate to="/dashboard" replace/>} />
+          <Route  path='/dashboard' element={isAdmin?<><AdminNavbar/><Dashboard/></>: (<Navigate to="/admin/login"/>)}/>
+          <Route path='/admin/login' element={!isAdmin?<> <AdminNavbar/><AdminLogin/> </>: <Navigate to="/dashboard" />} />
           <Route path='/admin/properties' element={<><AdminNavbar/><AdminProperties/></>}/>
           <Route path='/admin/properties/:id' element={<><AdminNavbar/><PropertyDetails/></>  }/>
           <Route path='/admin/users' element={<><AdminNavbar/><UsersDetails/></> }/>

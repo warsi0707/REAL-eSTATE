@@ -97,9 +97,14 @@ userRouter.get("/verify",userAuth,async(req,res)=>{
         })
     }
 })
-userRouter.post("/logout",userAuth,(req, res) =>{
+userRouter.post("/logout",(req, res) =>{
     try{
-        res.clearCookie("userToken",JWT_USER_SECRETE)
+        res.clearCookie("userToken",{
+            httpOnly: true,
+            maxAge: 7 * 60* 60 * 1000,
+            sameSite: process.env.NODE_ENV ==="Development"? "lax": "none",
+            secure: process.env.NODE_ENV==="Development"? false: true
+        },JWT_USER_SECRETE)
         return res.json({
             message: "Logout successfully",
             authenticated: false

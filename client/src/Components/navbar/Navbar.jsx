@@ -30,7 +30,7 @@ export default function Navbars() {
         setMessage(result.message);
         setError("");
         setTimeout(() => {
-          navigate("/");
+          navigate("/login");
           setMessage("");
         }, 2000);
       } else {
@@ -80,13 +80,13 @@ export default function Navbars() {
             {!isAuthenticated ? (
               <>
                 <NavLink to={"/login"}>
-                  {" "}
+              
                   <button className="bg-green-700 h-10 w-24 text-center rounded-md p-1  hover:bg-green-900 ">
                     Login
                   </button>
                 </NavLink>
                 <NavLink to={"/signup"}>
-                  {" "}
+              
                   <button className="bg-yellow-700 h-10 w-24 text-center rounded-md p-1  hover:bg-yellow-900 ">
                     Signup
                   </button>
@@ -96,13 +96,13 @@ export default function Navbars() {
               <>
                 <h1 className="mt-1 text-purple-600 cursor-auto">{username}</h1>
                 <NavLink to={"/add"}>
-                  {" "}
+            
                   <button className="bg-green-700 h-10 px-2 text-center rounded-md p-1  hover:bg-green-900 ">
                     Sell Property
                   </button>
                 </NavLink>
                 <NavLink>
-                  {" "}
+                
                   <button
                     onClick={Logout}
                     className="bg-red-500 h-10 w-24 text-center rounded-md p-1  hover:bg-red-900 "
