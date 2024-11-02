@@ -35,8 +35,8 @@ export default function Home() {
             <h1 className="text-center text-3xl my-5 ">Latest Property</h1>
             <div className="md:w-full mx-auto p-5 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 relative">
               {posts.map((item) => (
+                <a key={item.id} href={`/#property/${item._id}`}>
                 <div
-                  key={item.id}
                   className="card bg-gray-50 rounded-t-xl   w-80 mx-auto mb-10 text-black"
                 >
                   <div className="relative">
@@ -73,6 +73,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+                </a>
               ))}
               <div className="absolute bottom-2 right-32 ">
                 <a

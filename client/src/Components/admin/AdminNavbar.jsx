@@ -21,7 +21,7 @@ export default function AdminNavbar() {
         setMessage(result.message);
         setError("");
         setTimeout(() => {
-          navigate("/admin/login");
+          navigate("/dashboard");
           setMessage("");
         }, 2000);
       } else {
@@ -56,7 +56,7 @@ export default function AdminNavbar() {
             </>
           ) : (
             <>
-              <NavLink to={"/#admin/login"}>
+              <NavLink to={"/admin/login"}>
                 {" "}
                 <button className="bg-green-700 h-10 w-24 text-center rounded-md p-1  hover:bg-green-900 ">
                   Login

@@ -79,7 +79,7 @@ export default function Navbars() {
           <NavLink className="flex gap-5">
             {!isAuthenticated ? (
               <>
-                <NavLink to={"/login"}>
+                <NavLink to={"/#login"}>
               
                   <button className="bg-green-700 h-10 w-24 text-center rounded-md p-1  hover:bg-green-900 ">
                     Login

@@ -43,7 +43,7 @@ export default function AddProperty() {
         setMessage(result.message);
         setError("");
         setTimeout(() => {
-          navigate("/#dashboard");
+          navigate("/dashboard");
         }, 2000);
       } else {
         setError(result.message);

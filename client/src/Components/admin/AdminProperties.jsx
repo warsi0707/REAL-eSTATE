@@ -33,7 +33,7 @@ export default function AdminProperties() {
         setMessage(result.message);
         setTimeout(() => {
           setMessage("");
-          navigate("/#admin/#properties");
+          navigate("/admin/properties");
         }, 2000);
       } else {
         setError(result.message);

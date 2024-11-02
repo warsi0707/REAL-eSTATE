@@ -28,7 +28,7 @@ export default function Login() {
         setMessage(result.message);
         setTimeout(() => {
           setMessage("");
-          navigate("/#");
+          navigate("/");
         }, 2000);
       } else {
         setError(result.message);

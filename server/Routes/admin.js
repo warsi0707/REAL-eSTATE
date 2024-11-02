@@ -88,7 +88,7 @@ adminRoute.get("/verify", adminAuth, async (req, res) => {
         })
     }
 })
-adminRoute.get("/users", async (req, res) => {
+adminRoute.get("/users",adminAuth, async (req, res) => {
     try {
         const users = await User.find({})
         if (users.length < 0) {
@@ -130,7 +130,7 @@ adminRoute.get("/dashboard", adminAuth, async (req, res) => {
         })
     }
 })
-adminRoute.post("/logout", adminAuth, async (req, res) => {
+adminRoute.post("/logout", async (req, res) => {
     try {
         res.clearCookie("adminToken",{
             httpOnly: true,

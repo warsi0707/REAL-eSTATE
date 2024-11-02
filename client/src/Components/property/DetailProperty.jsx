@@ -23,7 +23,7 @@ export default function DetailProperty() {
   }, []);
   return (
     <>
-      <div className="main  text-white w-auto mx-32 h-96  my-10">
+      <div className="main  text-white w-auto mx-32 h-screen my-10">
         <div className="img ">
           <img
             className="h-96 rounded-t-xl object-cover w-full"

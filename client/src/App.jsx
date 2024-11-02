@@ -36,7 +36,7 @@ function App() {
           <Route path='/signup' element={<><Navbars/><Signup/></>}/>
           <Route path='/add' element={isAuthenticated?<> <AdminNavbar/><AddProperty/> </>: <Navigate to="/login"/>}/>
           <Route path='/property' element={<><Navbars/><Properties/></>}/>
-          <Route path='/property/:id' element={isAdmin?<><Navbars/><DetailProperty/></>:<Navigate to="/login"/>}/>
+          <Route path='/property/:id' element={<><Navbars/><DetailProperty/></>} />
         </Routes>
       </UserAuth>
       

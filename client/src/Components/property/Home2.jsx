@@ -77,8 +77,9 @@ export default function Home2() {
             <h1 className="text-center text-3xl py-5">Search result</h1>
             <div className="md:w-full mx-auto p-5 grid  sm:grid-cols-1 lg:grid-cols-3 relative">
               {data.map((item) => (
+                <a key={item.id} href={`/#property/${item._id}`}>
                 <div
-                  key={item.id}
+                  
                   className="card bg-gray-50 rounded-t-xl   w-80 mx-auto mb-10 text-black"
                 >
                   <div className="relative">
@@ -115,6 +116,7 @@ export default function Home2() {
                     </div>
                   </div>
                 </div>
+                </a>
               ))}
             </div>
           </>
