@@ -30,11 +30,11 @@ export default function AdminLogin() {
         setError("");
         setMessage(result.message);
         setTimeout(() => {
-          navigate("/#dashboard");
+          navigate("/dashboard");
         }, 2000);
       } else {
         setIsAdmin(false);
-        navigate("/#admin/login");
+        navigate("/admin/login");
         setError(result.message);
         setTimeout(() => {
           setError("");
