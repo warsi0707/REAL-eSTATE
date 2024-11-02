@@ -34,7 +34,7 @@ export default function AdminLogin() {
         }, 2000);
       } else {
         setIsAdmin(false);
-        navigate("/#admin/#login");
+        navigate("/#admin/login");
         setError(result.message);
         setTimeout(() => {
           setError("");

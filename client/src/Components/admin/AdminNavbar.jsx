@@ -21,7 +21,7 @@ export default function AdminNavbar() {
         setMessage(result.message);
         setError("");
         setTimeout(() => {
-          navigate("/#");
+          navigate("/#admin/login");
           setMessage("");
         }, 2000);
       } else {
@@ -36,7 +36,7 @@ export default function AdminNavbar() {
       <div className="p-5 text-xl  w-full bg-gray-600 flex justify-evenly">
         <div className="flex gap-2">
           <a href="/#">Home</a>
-          <a className="hover:text-purple-400" href="/dashboard">
+          <a className="hover:text-purple-400" href="/#dashboard">
             Admin
           </a>
         </div>
@@ -56,7 +56,7 @@ export default function AdminNavbar() {
             </>
           ) : (
             <>
-              <NavLink to={"/#admin/#login"}>
+              <NavLink to={"/#admin/login"}>
                 {" "}
                 <button className="bg-green-700 h-10 w-24 text-center rounded-md p-1  hover:bg-green-900 ">
                   Login
