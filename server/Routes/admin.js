@@ -132,11 +132,13 @@ adminRoute.get("/dashboard", adminAuth, async (req, res) => {
 })
 adminRoute.post("/logout", adminAuth, async (req, res) => {
     try {
-        const { id } = req.user
-        const admin = await Admin.findById({ _id: id })
-        res.clearCookie("adminToken", JWT_ADMIN_SECRETE)
+        res.clearCookie("adminToken",{
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV ==="Development"? "lax": "none",
+            secure: process.env.NODE_ENV==="Development"? false: true
+        },JWT_ADMIN_SECRETE)
         return res.json({
-            message: `${admin.name} logout`,
+            message: `Admin logout`,
             authenticated: false
         })
     } catch (error) {
