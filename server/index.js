@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     // origin: "https://real-estate-2oiv.onrender.com",
-    origin: [" http://localhost:5173"],
+    origin: "http://localhost:5173",
     methods: ["GET","POST","PUT","DELETE"],
     credentials: true
 }))
