@@ -21,7 +21,7 @@ export default function AdminNavbar() {
         setMessage(result.message);
         setError("");
         setTimeout(() => {
-          navigate("/#admin/login");
+          navigate("/admin/login");
           setMessage("");
         }, 2000);
       } else {
