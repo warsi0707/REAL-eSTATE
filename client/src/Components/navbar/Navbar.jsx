@@ -66,26 +66,26 @@ export default function Navbars() {
         <div className="link hidden w-full lg:flex md:text-center md:items-center md:gap-2 md:w-full text-2xl text-white ">
           <NavLink
             className="hover:text-purple-400 hover:underline"
-            to="/#property"
+            to="/property"
           >
             Property
           </NavLink>
           <NavLink
             className="hover:text-purple-400 hover:underline"
-            to="/#dashboard"
+            to="/dashboard"
           >
             Admin
           </NavLink>
           <NavLink className="flex gap-5">
             {!isAuthenticated ? (
               <>
-                <NavLink to={"/#login"}>
+                <NavLink to={"/login"}>
                   {" "}
                   <button className="bg-green-700 h-10 w-24 text-center rounded-md p-1  hover:bg-green-900 ">
                     Login
                   </button>
                 </NavLink>
-                <NavLink to={"/#signup"}>
+                <NavLink to={"/signup"}>
                   {" "}
                   <button className="bg-yellow-700 h-10 w-24 text-center rounded-md p-1  hover:bg-yellow-900 ">
                     Signup
@@ -95,7 +95,7 @@ export default function Navbars() {
             ) : (
               <>
                 <h1 className="mt-1 text-purple-600 cursor-auto">{username}</h1>
-                <NavLink to={"/#add"}>
+                <NavLink to={"/add"}>
                   {" "}
                   <button className="bg-green-700 h-10 px-2 text-center rounded-md p-1  hover:bg-green-900 ">
                     Sell Property
@@ -121,22 +121,22 @@ export default function Navbars() {
             <NavLink to="/#" className=" hover:text-purple-400">
               Home
             </NavLink>
-            <NavLink to="/#property" className="hover:text-purple-400">
+            <NavLink to="/property" className="hover:text-purple-400">
               Property
             </NavLink>
-            <NavLink to="/#dashboard" className="cursor-auto">
+            <NavLink to="/dashboard" className="cursor-auto">
               Admin
             </NavLink>
             {!isAuthenticated ? (
               <>
                 <NavLink
-                  to="/#login"
+                  to="/login"
                   className="text-green-700 hover:text-green-950"
                 >
                   Login
                 </NavLink>
                 <NavLink
-                  to="/#signup"
+                  to="/signup"
                   className="  hover:text-yellow-900 text-yellow-600"
                 >
                   Signup
@@ -145,7 +145,7 @@ export default function Navbars() {
             ) : (
               <>
                 <NavLink
-                  to="/#add"
+                  to="/add"
                   className="  hover:text-yellow-900 text-yellow-500"
                 >
                   Sell Property
