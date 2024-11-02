@@ -1,4 +1,4 @@
-import { BrowserRouter as Router,Route,Routes, Navigate, replace } from 'react-router-dom'
+import { BrowserRouter as Router,Route,Routes, Navigate, HashRouter } from 'react-router-dom'
 // import './App.css'
 import Home from './Components/property/Home'
 import Navbars from './Components/navbar/Navbar'
@@ -28,7 +28,7 @@ function App() {
   return (
 
     <>
-    <Router>
+    <HashRouter>
       <UserAuth>
         <Routes>
           <Route path='/' element={<><Navbars/><Home/></> } errorElement={<ErrorPage/>} />
@@ -51,7 +51,7 @@ function App() {
         </Routes>
       </AdminAuth> 
     
-    </Router>
+    </HashRouter>
     <Footer/>
      
     </>

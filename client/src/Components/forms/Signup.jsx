@@ -30,7 +30,7 @@ export default function Signup() {
         setMobile("");
         setError("");
         setTimeout(() => {
-          navigate("/login");
+          navigate("/#login");
         }, 2000);
       } else {
         setError(result.message);

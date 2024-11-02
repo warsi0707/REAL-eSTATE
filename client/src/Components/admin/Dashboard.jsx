@@ -45,7 +45,7 @@ export default function Dashboard() {
               {properties}
             </p>
             <div className="text-center ">
-              <a href="/admin/properties" className="r">
+              <a href="/#admin/#properties" className="r">
                 View Details
               </a>
             </div>
@@ -63,7 +63,7 @@ export default function Dashboard() {
             <h1>Total User</h1>
             <p className="text-start flex my-7 text-3xl font-bold">{users}</p>
             <div className="text-center ">
-              <a href="/admin/users" className="r">
+              <a href="/#admin/#users" className="r">
                 View Details
               </a>
             </div>

@@ -38,7 +38,7 @@ export default function Properties() {
           <>
             <div className="w-full mx-auto gap-5 p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
               {properties.map((item) => (
-                <a key={item._id} href={`/property/${item._id}`}>
+                <a key={item._id} href={`/#property/${item._id}`}>
                   <div className="card bg-gray-50 rounded-t-xl   w-80 mx-auto mb-10 text-black">
                     <div className="relative">
                       <img

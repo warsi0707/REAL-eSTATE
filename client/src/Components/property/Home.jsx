@@ -76,7 +76,7 @@ export default function Home() {
               ))}
               <div className="absolute bottom-2 right-32 ">
                 <a
-                  href="/property"
+                  href="/#property"
                   className="underline text-blue-700 text-2xl"
                 >
                   More...
