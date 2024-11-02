@@ -47,7 +47,7 @@ function App() {
           <Route path='/admin/properties' element={<><AdminNavbar/><AdminProperties/></>} errorElement={<ErrorPage/>}/>
           <Route path='/admin/properties/:id' element={<><AdminNavbar/><PropertyDetails/></>  } errorElement={<ErrorPage/>}/>
           <Route path='/admin/users' element={<><AdminNavbar/><UsersDetails/></> } errorElement={<ErrorPage/>}/>
-          <Route path='#*' element={<NotFound/>}/>
+          <Route path='*' errorElement={<NotFound/>}/>
         </Routes>
       </AdminAuth> 
     
