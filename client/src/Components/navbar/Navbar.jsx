@@ -48,9 +48,13 @@ export default function Navbars() {
     <>
       <nav className="bg-slate-600 h-20 grid grid-cols-2  gap-0 ">
         <div className="grid justify-evenly text-center items-center">
-          <a href="/#">
-            <h1 className="text-3xl">REAL eSTATE</h1>
-          </a>
+        <NavLink
+            className="hover:text-purple-400 hover:underline"
+            to="/#"
+          >
+            REAL eSTATE
+          </NavLink>
+          
         </div>
 
         <div
