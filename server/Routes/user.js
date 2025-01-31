@@ -1,32 +1,31 @@
 const Router = require("express")
 const { SignupValidation, SigninValidation } = require("../Middleware/validation");
-const { User } = require("../Database/DB");
+const { User, Contact, Admin } = require("../Database/DB");
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 const { JWT_USER_SECRETE } = require("../Config");
 const { userAuth } = require("../Middleware/auth");
 const userRouter = Router()
 
+//user signup
 userRouter.post("/signup",async(req, res)=>{
-    const {email, password, name, mobile} = req.body;
+    const {username, password} = req.body;
     try{
-        if(!email || !password || !name || !mobile){
+        if(!username || !password ){
             return res.status(404).json({
                 message: "All input required"
             })
         }
-        const user = await User.findOne({email})
+        const user = await User.findOne({username})
         if(user){
             return res.status(404).json({
-                message: `${email} already exist`
+                message: `${username} already exist`
             })
         }
         const hashPassword = await bcrypt.hash(password,5)
         const newUser = await User.create({
-            email,
-            password: hashPassword,
-            name,
-            mobile
+            username,
+            password: hashPassword
         })
         return res.json({
             message: "User signup successfully",
@@ -40,19 +39,20 @@ userRouter.post("/signup",async(req, res)=>{
     }
 
 })
+//user signin
 userRouter.post("/signin",async(req, res)=>{
-    const {email, password} = req.body;
+    const {username, password} = req.body;
     try{
-        const user = await User.findOne({email})
+        const user = await User.findOne({username})
         if(!user){
             return res.status(404).json({
-                message:"Incorrect Email, Please Provide Correct Email"
+                message:"Username not found"
             })
         }
-        const comparePassword =await bcrypt.compare(password, user.password)
+        const comparePassword = user?bcrypt.compare(password, user.password): false
         if(!comparePassword){
             return res.status(404).json({
-                message: "Incorrect password,  Please Provide Correct Password"
+                message: "Incorrect password"
             })
         }
         const userToken =  jwt.sign({
@@ -65,38 +65,35 @@ userRouter.post("/signin",async(req, res)=>{
             secure: process.env.NODE_ENV==="Development"? false: true
         })
         return res.json({
-            message: "User signin successfully",
+            message: "Signin success",
             token: userToken
         })
-
     }catch(error){
         res.status(404).json({
             message: error.message
         })
-    }
-    
+    } 
 })
+//login verification
 userRouter.get("/verify",userAuth,async(req,res)=>{
     try{
-        const {id} = req.user 
-        const user = await User.findById({_id:id})
+        const id = req.user 
+        const user = await User.findById(id)
         if(!user){
             return res.status(404).json({
                 authenticated: false
             })
         }
         return res.json({
-            authenticated:true,
-            username: user.name
+            authenticated:true
         })
-        
-
     }catch(error){
         res.status(404).json({
             message: error.message
         })
     }
 })
+//user logout
 userRouter.post("/logout",(req, res) =>{
     try{
         res.clearCookie("userToken",{
@@ -115,9 +112,21 @@ userRouter.post("/logout",(req, res) =>{
         })
     }
 })
-// userRouter.post("/review",(req, res)=>{
-    
-// })
+userRouter.post("/contact",async(req, res)=>{
+    const {name, email, phone} = req.body;
+    try{
+        const contact = await Contact.create({
+            name, email, phone
+        })
+        return res.json({
+            query: contact
+        })
+    }catch(error){
+        res.status(404).json({
+            message: error.message
+        })
+    }
+})
 
 module.exports = {
     userRouter:userRouter

@@ -3,7 +3,7 @@ const { Property } = require("../Database/DB")
 const { userAuth, adminAuth } = require("../Middleware/auth")
 const propertyRoute = Router()
 
-
+//all property
 propertyRoute.get("/", async (req, res) => {
     try {
         const allProperty = await Property.find({})
@@ -23,6 +23,7 @@ propertyRoute.get("/", async (req, res) => {
         })
     }
 })
+//starter porperty
 propertyRoute.get("/item", async (req, res) => {
     try {
         const allProperty = await Property.find({}).limit(3)
@@ -42,6 +43,7 @@ propertyRoute.get("/item", async (req, res) => {
         })
     }
 })
+//search by 
 propertyRoute.get("/search", async (req, res) => {
     const { query } = req.query;
     try {
@@ -53,7 +55,9 @@ propertyRoute.get("/search", async (req, res) => {
         const properties = await Property.find({
             $or: [
                 { title: { $regex: query, $options: "i" } },
-                { city: { $regex: query, $options: "i" } }
+                { city: { $regex: query, $options: "i" } },
+                { price: { $regex: query, $options: "i" } },
+                { location: { $regex: query, $options: "i" } }
             ]
         })
         if (properties.length === 0) {
@@ -72,7 +76,7 @@ propertyRoute.get("/search", async (req, res) => {
         })
     }
 })
-
+//property search by id
 propertyRoute.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
@@ -86,93 +90,6 @@ propertyRoute.get("/:id", async (req, res) => {
         })
     }
 })
-propertyRoute.post("/add", userAuth, async (req, res) => {
-    try {
-        const { title, description, location, city, area, price, beds, image, contact } = req.body;
-        if (!title || !description || !image || !city || !contact || !location || !area || !price || !beds) {
-            return res.status(404).json({
-                message: "All input required"
-            })
-        }
-        const property = await Property.findOne({ title })
-        if (property) {
-            return res.json({
-                message: `${title} already exist`
-            })
-        }
-        const newProperty = await Property.create({
-            title,
-            description,
-            location,
-            area,
-            city,
-            price,
-            beds,
-            image,
-            contact
-        })
-        if (!newProperty) {
-            return res.status(404).json({
-                message: "Something error occured while adding property"
-            })
-        } else {
-            return res.json({
-                message: "Property added successfully",
-                properties: newProperty
-            })
-        }
-
-    } catch (error) {
-        res.status(404).json({
-            message: error.message
-        })
-    }
-})
-propertyRoute.put("/:id", adminAuth, async (req, res) => {
-
-    try {
-        const { id } = req.params;
-        const { title, description, image, contact } = req.body;
-        if (!title || !description || !image || !contact) {
-            return res.json({
-                message: "All input required"
-            })
-        }
-        const property = await Property.findByIdAndUpdate({ _id: id }, {
-            title: title,
-            description: description,
-            image: image,
-            contact: contact
-        })
-        if (property) {
-
-        }
-        return res.json({
-            message: "Property updated "
-        })
-
-    } catch (error) {
-        res.json({
-            message: error.message
-        })
-    }
-})
-propertyRoute.delete("/:id", adminAuth, async (req, res) => {
-    const { id } = req.params;
-    try {
-        const property = await Property.findByIdAndDelete({ _id: id })
-        return res.json({
-            message: "Property deleted",
-            deleted: property
-        })
-    } catch (error) {
-        res.status(404).json({
-            message: error.message
-        })
-    }
-})
-
-
 module.exports = {
     propertyRoute
 }

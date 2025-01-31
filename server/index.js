@@ -22,9 +22,9 @@ app.use(cors({
     credentials: true
 }))
 
-app.use("/api/admin",adminRoute)
-app.use("/api/property", propertyRoute)
-app.use("/api/user", userRouter)
+app.use("/api/v1/admin",adminRoute)
+app.use("/api/v1/property", propertyRoute)
+app.use("/api/v1/user", userRouter)
 
 app.get("*",(req, res) =>{
     res.sendFile(path.resolve(__dirname,'client','dist','index.html'))

@@ -7,16 +7,17 @@ function adminAuth(req, res, next) {
         const adminToken = req.cookies.adminToken;
         if (!adminToken) {
             return res.status(404).json({
-                message: "You are not Admin, please login"
+                message: "Login Required!"
             })
         }
         const decode = jwt.verify(adminToken, JWT_ADMIN_SECRETE)
+        console.log(decode)
         if (!decode) {
             return res.status(404).json({
-                message: "Not authenticated"
+                message: "Login Required!"
             })
         }
-        req.user = decode
+        req.user = decode.adminId
         next()
 
     } catch (error) {
@@ -32,16 +33,17 @@ function userAuth(req, res, next) {
         const userToken = req.cookies.userToken;
         if (!userToken) {
             return res.status(404).json({
-                message: "Token not provided, please login"
+                message: "Login required!"
             })
         }
         const decode = jwt.verify(userToken, JWT_USER_SECRETE)
+        console.log(decode)
         if (!decode) {
             return res.status(404).json({
                 message: "Not verify, please login again"
             })
         }
-        req.user = decode
+        req.user = decode.id
         next()
     } catch (error) {
         return res.status(404).json({
