@@ -27,7 +27,7 @@ adminRoute.post("/signup", async (req, res) => {
             username, password:hashPassword
         })
         return res.json({
-            message: `${username} signup successfully`
+            message: `signup success`
         })
 
     } catch (error) {
@@ -53,12 +53,12 @@ adminRoute.post("/signin", async (req, res) => {
         }, JWT_ADMIN_SECRETE)
         res.cookie("adminToken", adminToken, {
             httpOnly: true,
-            maxAge: 7 * 60 * 60 * 1000,
+            maxAge: 7 *24* 60 * 60 * 1000,
             sameSite: NODE_ENV === "Development" ? "lax" : "none",
             secure: NODE_ENV === "Development" ? false : true
         })
         return res.json({
-            message: `${username}, signin successfully`,
+            message: `signin success`,
             adminToken: adminToken
         })
     } catch (error) {
@@ -74,11 +74,11 @@ adminRoute.get("/verify", adminAuth, async (req, res) => {
         const admin = await Admin.findById(adminId)
         if (!admin) {
             return res.status(404).json({
-                authenticated: false
+                adminAuthenticated: false
             })
         }
         return res.json({
-            authenticated: true,
+            adminAuthenticated: true,
         })
     } catch (error) {
         res.status(404).json({
@@ -88,17 +88,19 @@ adminRoute.get("/verify", adminAuth, async (req, res) => {
 })
 //post the property
 adminRoute.post("/property", adminAuth, async(req, res) =>{
-    const {title, location, city, sizes, price, configurations, image, contact} = req.body;
+    const {title, location, city, sizes, price, bhk, image, area, } = req.body;
     const adminId = req.user;
     try{
-        if(!title, !location, !city, !sizes, !price, !configurations, !image, !contact){
+        if(!title, !location, !city, !sizes, !price,  !image){
             return res.status(500).json({
                 message: "All inputs required!"
             })
         }
         const addData = await Property.create({
-            title, location, city, sizes, price, configurations, image, contact, postedBy: adminId
-        })
+                    title, location, city, price, bhk, image, postedBy: adminId,date: Date.now(),sizes,area,launchDate: Date.now(),
+                    posessionStart: Date.now()
+        }
+        )
         if(addData){
             return res.status(200).json({
                 message: "Property posted"
@@ -112,13 +114,32 @@ adminRoute.post("/property", adminAuth, async(req, res) =>{
             message: error.message
         })
     }
-   
 })
 //All property listed by the specefic owner
 adminRoute.get("/property", adminAuth, async(req, res) =>{
     const adminId = req.user;
     try{
         const properties = await Property.find({postedBy: adminId})
+        if(properties.length == 0){
+            return res.status(404).json({
+                message: "Property not listed "
+            })
+        }
+        return res.status(200).json({
+            properties: properties
+        })
+    }catch(error){
+        res.status(404).json({
+            message: error.message
+        })
+    } 
+})
+//Get by id
+adminRoute.get("/property/:id", adminAuth, async(req, res) =>{
+    const adminId = req.user;
+    const {id} = req.params;
+    try{
+        const properties = await Property.findById(id)
         if(properties.length == 0){
             return res.status(404).json({
                 message: "Property not listed "
@@ -229,6 +250,28 @@ adminRoute.get("/dashboard", adminAuth, async (req, res) => {
         })
     }
 })
+adminRoute.get("/properties", adminAuth, async(req, res)=>{
+    const id = req.user;
+    try{
+        if(!id){
+            return res.status(404).json({
+                message: "Data not found"
+            })
+        }
+        const findPropertyByUser = await Property.find({postedBy: id})
+        if(findPropertyByUser ==null){
+            return null
+        }
+        return res.json({
+            data: findPropertyByUser
+        })
+    }catch(e){
+        res.status(404).json({
+            message: e.message
+        })
+    }
+    
+})
 adminRoute.post("/logout", async (req, res) => {
     try {
         res.clearCookie("adminToken",{
@@ -238,7 +281,7 @@ adminRoute.post("/logout", async (req, res) => {
         },JWT_ADMIN_SECRETE)
         return res.json({
             message: `Admin logout`,
-            authenticated: false
+            adminAuthenticated: false
         })
     } catch (error) {
         res.status(404).json({

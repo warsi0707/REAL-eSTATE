@@ -13,7 +13,44 @@ propertyRoute.get("/", async (req, res) => {
             })
         }
         return res.json({
-            message: "All properties",
+            properties: allProperty
+        })
+
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
+})
+//one property
+propertyRoute.get("/one", async (req, res) => {
+    try {
+        const allProperty = await Property.find({}).limit(1)
+        if (allProperty == null) {
+            return res.json({
+                message: "No property listed"
+            })
+        }
+        return res.json({
+            properties: allProperty
+        })
+
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
+})
+//Three property
+propertyRoute.get("/three", async (req, res) => {
+    try {
+        const allProperty = await Property.find({}).limit(3)
+        if (allProperty == null) {
+            return res.json({
+                message: "No property listed"
+            })
+        }
+        return res.json({
             properties: allProperty
         })
 
@@ -81,12 +118,33 @@ propertyRoute.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const property = await Property.findById(id)
+        const ammenties = property.ammenties.map((item)=> item)
         return res.json({
-            property: property
+            property: property,
+            ammenties: ammenties
         })
     } catch (error) {
         res.status(404).json({
             message: error.message
+        })
+    }
+})
+propertyRoute.get("/ratings/:id",async(req, res)=>{
+    const {id} = req.params;
+    try{
+        const findReview = await Property.findById(id).populate({
+            path : 'rating.user',
+            select: 'username'
+        })
+        if(findReview ==null){
+            return null
+        }
+        return res.json({
+            review: findReview.rating.map((item)=> item)
+        })
+    }catch(e){
+        res.status(404).json({
+            message: e.message
         })
     }
 })

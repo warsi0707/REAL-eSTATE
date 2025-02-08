@@ -1,17 +1,10 @@
 const mongoose = require("mongoose")
+const { number, string } = require("zod")
 
 
 const AdminSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
-    password: String,
-    // contacts : [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref : "Contact"
-    // }],
-    postedProperty : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Property"
-    }
+    password: String, 
 })
 const ContactSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -23,49 +16,40 @@ const UserSchema = new mongoose.Schema({
     password: String
 })
 
-
 const PropertySchema = new mongoose.Schema({
     title: { type: String, unique: true, required: true },
-    postedBy: [{
+    postedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Admin"
-    }],
+    },
     location: String,
     city: String,
-    sizes: String,
     price: Number,
-    configurations: Number,
+    bhk: Number,
     image: String,
-    contact: String,
-    date: {
-        type: Date
-    },
-    rating: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Review"
-    }]
+    date: Date,
+    sizes: String,
+    area: String,
+    launchDate : String,
+    startDate : String,
+    rating: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            rating: Number
+        }
+    ]
 })
-
-const ReviewSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
-    rating: Number
-})
-
 const Admin = mongoose.model("Admin", AdminSchema)
 const Contact = mongoose.model("Contact", ContactSchema)
 const User = mongoose.model("User", UserSchema)
 const Property = mongoose.model("Property", PropertySchema)
-const Review = mongoose.model("Review", ReviewSchema)
-
-
 
 module.exports = {
     Admin,
     User,
     Property,
-    Review,
     Contact
 }
