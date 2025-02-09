@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { BackendUrl } from '../providers/Provider'
 import { useRecoilState } from 'recoil'
 import { messageAtom, successAtom } from '../atom/Atom'
@@ -8,14 +8,12 @@ import { messageAtom, successAtom } from '../atom/Atom'
 export default function SellerCard({title, location, price, image, id, ondelete}) {
   const [message, setMessage] = useRecoilState(messageAtom)
   const [success, setSuccess] = useRecoilState(successAtom)
-  console.log(id)
   const Delete =async()=>{
     const response = await fetch(`${BackendUrl}/admin/property/${id}`,{
       method :'DELETE',
       credentialsl: 'include'
     })
     const result = await response.json()
-    console.log(result)
     if(response.ok){
       setMessage(result.message)
       setSuccess(true)
@@ -25,7 +23,7 @@ export default function SellerCard({title, location, price, image, id, ondelete}
     }
   }
   return (
-    <div className='flex gap-12 mx-auto mt-10 border-2 border-gray-200 rounded-md w-[800px]'>
+    <div className='flex gap-12 mx-auto mt-2 border-2 border-gray-200 rounded-md w-[800px]'>
     <div className='h-32 w-52'>
          <img className='object-cover w-full h-full rounded-l-md' src={image} alt="" />
     </div>

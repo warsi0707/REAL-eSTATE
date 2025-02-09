@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 import { BackendUrl } from '../providers/Provider'
 import { messageAtom, passwordAtom, successAtom, usernameAtom } from '../atom/Atom'
 import { useRecoilState } from 'recoil'
@@ -46,7 +45,7 @@ export default function Signup() {
       }
     }
   return (
-    <div className='flex items-center justify-center h-screen bg-gray-600'>
+    <div className='flex items-center justify-center h-screen bg-gray-300'>
        {message && <Message message={message} success={success} />}
         <div className='relative p-5 py-5 bg-white opacity-100 w-96'>
             <div className='mt-16 space-y-5'>

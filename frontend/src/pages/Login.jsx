@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { messageAtom, passwordAtom, successAtom, usernameAtom } from '../atom/Atom'
@@ -27,7 +26,6 @@ export default function Login({open, onClose}) {
       const result = await response.json()
       setUsername("")
       setPassword("")
-      console.log(result)
       if(response.ok){
         setMessage(result.message)
         setSuccess(true)

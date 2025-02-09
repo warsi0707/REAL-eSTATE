@@ -13,6 +13,7 @@ import Login from "./pages/Login"
 import { useRecoilValue } from "recoil"
 import { adminAuthenticatedAtom } from "./atom/Atom"
 import SellerContact from "./seller/SellerContact"
+import Footer from "./components/Footer"
 
 
 function App() {
@@ -21,20 +22,18 @@ function App() {
   return (
     <>
     <BrowserRouter>
-    {/* <Navbar open={open} onClose={()=> setOpen(true)} /> */}
     <Login open={open} onClose={()=> {setOpen(false)}}  />
-    <Routes>
-      <Route path="/" element={<><Navbar open={open} onClose={()=> setOpen(true)}/> <Dashboard/></> }/>
-      <Route path="/property/:id" element={<><Navbar open={open} onClose={()=> setOpen(true)}/><PropertyDetails/></> }/>
-      <Route path="/signup" element={<><Navbar open={open} onClose={()=> setOpen(true)}/><Signup/></>}/>
-
-      <Route path="/seller/signup" element={<SellerSignup/>}/>
-      <Route path="/seller/signin" element={isAdminLogin?<SellerDashboard/>: <SellerLogin/>}/>
-      <Route path="/seller/dashboard" element={isAdminLogin? <SellerDashboard/>: <SellerLogin/>}/>
-      <Route path="/seller/add" element={<AddProperty/>}/>
-      <Route path="/seller/:id" element={isAdminLogin?<EditProperty/>:<SellerLogin/>}/>
-      <Route path="/seller/contact" element={isAdminLogin?<SellerContact/>:<SellerLogin/>}/>
-    </Routes>
+      <Routes>
+        <Route path="/" element={<><Navbar open={open} onClose={()=> setOpen(true)}/> <Dashboard/><Footer/></> }/>
+        <Route path="/property/:id" element={<><Navbar open={open} onClose={()=> setOpen(true)}/><PropertyDetails/><Footer/></> }/>
+        <Route path="/signup" element={<><Navbar open={open} onClose={()=> setOpen(true)}/><Signup/><Footer/></>}/>
+        <Route path="/seller/signup" element={<SellerSignup/>}/>
+        <Route path="/seller/signin" element={isAdminLogin?<SellerDashboard/>: <SellerLogin/>}/>
+        <Route path="/seller/dashboard" element={isAdminLogin? <SellerDashboard/>: <SellerLogin/>}/>
+        <Route path="/seller/add" element={<AddProperty/>}/>
+        <Route path="/seller/:id" element={isAdminLogin?<EditProperty/>:<SellerLogin/>}/>
+        <Route path="/seller/contact" element={isAdminLogin?<SellerContact/>:<SellerLogin/>}/>
+      </Routes>
     </BrowserRouter>
     </>
   )

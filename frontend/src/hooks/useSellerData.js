@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { BackendUrl } from '../providers/Provider'
 import { useRecoilState } from 'recoil'
 import { sellerDataAtom } from '../atom/Atom'
@@ -11,11 +11,9 @@ export default function useSellerData() {
             credentials: 'include'
         })
         const result = await response.json()
-        console.log(result)
         if(response.ok){
             setData(result.data)
         }
-        console.log(result)
     }
     useEffect(()=>{
         FetchData()

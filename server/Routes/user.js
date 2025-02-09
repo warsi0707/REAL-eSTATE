@@ -8,21 +8,21 @@ const { userAuth } = require("../Middleware/auth");
 const userRouter = Router()
 
 //user signup
-userRouter.post("/signup",async(req, res)=>{
-    const {username, password} = req.body;
-    try{
-        if(!username || !password ){
+userRouter.post("/signup", async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        if (!username || !password) {
             return res.status(404).json({
                 message: "All input required"
             })
         }
-        const user = await User.findOne({username})
-        if(user){
+        const user = await User.findOne({ username })
+        if (user) {
             return res.status(404).json({
                 message: `${username} already exist`
             })
         }
-        const hashPassword = await bcrypt.hash(password,5)
+        const hashPassword = await bcrypt.hash(password, 5)
         const newUser = await User.create({
             username,
             password: hashPassword
@@ -32,7 +32,7 @@ userRouter.post("/signup",async(req, res)=>{
             user: newUser
         })
 
-    }catch(error){
+    } catch (error) {
         res.status(404).json({
             message: error.message
         })
@@ -40,122 +40,118 @@ userRouter.post("/signup",async(req, res)=>{
 
 })
 //user signin
-userRouter.post("/signin",async(req, res)=>{
-    const {username, password} = req.body;
-    try{
-        const user = await User.findOne({username})
-        if(!user){
+userRouter.post("/signin", async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const user = await User.findOne({ username })
+        if (!user) {
             return res.status(404).json({
-                message:"Username not found"
+                message: "Username not found"
             })
         }
-        const comparePassword = user?bcrypt.compare(password, user.password): false
-        if(!comparePassword){
+        const comparePassword = user ? bcrypt.compare(password, user.password) : false
+        if (!comparePassword) {
             return res.status(404).json({
                 message: "Incorrect password"
             })
         }
-        const userToken =  jwt.sign({
+        const userToken = jwt.sign({
             id: user._id
-        },JWT_USER_SECRETE)
-        res.cookie("userToken", userToken,{
+        }, JWT_USER_SECRETE)
+        res.cookie("userToken", userToken, {
             httpOnly: true,
-            maxAge: 7 * 24 * 60* 60 * 1000,
-            sameSite: process.env.NODE_ENV ==="Development"? "lax": "none",
-            secure: process.env.NODE_ENV==="Development"? false: true
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true
         })
         return res.json({
             message: "Signin success",
             token: userToken
         })
-    }catch(error){
+    } catch (error) {
         res.status(404).json({
             message: error.message
         })
-    } 
+    }
 })
 //login verification
-userRouter.get("/verify",userAuth,async(req,res)=>{
-    try{
-        const id = req.user 
+userRouter.get("/verify", userAuth, async (req, res) => {
+    try {
+        const id = req.user
         const user = await User.findById(id)
-        if(!user){
+        if (!user) {
             return res.status(404).json({
                 userAuthenticated: false
             })
         }
         return res.json({
-            userAuthenticated:true
+            userAuthenticated: true
         })
-    }catch(error){
+    } catch (error) {
         res.status(404).json({
             message: error.message
         })
     }
 })
 //user logout
-userRouter.post("/logout",(req, res) =>{
-    try{
-        res.clearCookie("userToken",{
+userRouter.post("/logout", (req, res) => {
+    try {
+        res.clearCookie("userToken", {
             httpOnly: true,
-            sameSite: process.env.NODE_ENV ==="Development"? "lax": "none",
-            secure: process.env.NODE_ENV==="Development"? false: true
-        },JWT_USER_SECRETE)
+            sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+            secure: process.env.NODE_ENV === "Development" ? false : true
+        }, JWT_USER_SECRETE)
         return res.json({
             message: "Logout successfully",
             userAuthenticated: false
         })
 
-    }catch(error){
+    } catch (error) {
         res.status(404).json({
             message: error.message
         })
     }
 })
-userRouter.post("/contact",async(req, res)=>{
-    const {name, email, phone} = req.body;
-    try{
-        const contact = await Contact.create({
-            name, email, phone
-        })
-        return res.json({
-            query: contact
-        })
-    }catch(error){
-        res.status(404).json({
-            message: error.message
-        })
-    }
-})
-userRouter.post("/rate/:id",userAuth, async(req, res)=>{
+
+userRouter.post("/rate/:id", userAuth, async (req, res) => {
     const userId = req.user;
-    const {id} = req.params;
-    const {rating} = req.body
-    console.log(rating)
+    const { id } = req.params;
+    const { rating } = req.body
     const review = await Property.findByIdAndUpdate(id, {
         $push: {
-           rating: {
-            user: userId,
-            rating: rating
-           }
+            rating: {
+                user: userId,
+                rating: rating
+            }
         }
     })
     res.json({
         rate: review
     })
 })
-
-userRouter.post("/contact", async(req, res) =>{
-    const {name, email, phone} = req.body;
-
-    const contactss = await Contact.create({ name,
-        email,
-        phone})
-    res.json({
-        message : "Message sent"
-    })
+userRouter.post("/contact", async (req, res) => {
+    const { name, email, phone } = req.body;
+    try {
+        if (!name, !email, !phone) {
+            return res.status(404).json({
+                message: "All input required!"
+            })
+        }
+        await Contact.create({
+            name,
+            email,
+            phone
+        })
+        res.json({
+            message: "Message sent. Seller will contact you"
+        })
+    } catch (e) {
+        res.status(404).json({
+            message: e.message
+        })
+    }
 })
 
 module.exports = {
-    userRouter:userRouter
+    userRouter: userRouter
 }

@@ -1,4 +1,4 @@
-import { useRecoilState, useSetRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import { BackendUrl } from "../providers/Provider"
 import { messageAtom, userAuthenticatedAtom } from "../atom/Atom"
 

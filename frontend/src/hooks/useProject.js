@@ -10,7 +10,6 @@ export default function useProject() {
             method: "GET"
         })
         const result = await response.json()
-        console.log(result)
         if(response.ok){
             setProjects(result.data)
         }else{

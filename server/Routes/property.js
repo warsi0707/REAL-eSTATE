@@ -60,6 +60,25 @@ propertyRoute.get("/three", async (req, res) => {
         })
     }
 })
+//Three property
+propertyRoute.get("/projects", async (req, res) => {
+    try {
+        const allProperty = (await Property.find({}).limit(3)).reverse()
+        if (allProperty == null) {
+            return res.json({
+                message: "No property listed"
+            })
+        }
+        return res.json({
+            properties: allProperty
+        })
+
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
+})
 //starter porperty
 propertyRoute.get("/item", async (req, res) => {
     try {
@@ -118,7 +137,7 @@ propertyRoute.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const property = await Property.findById(id)
-        const ammenties = property.ammenties.map((item)=> item)
+        const ammenties = property
         return res.json({
             property: property,
             ammenties: ammenties
@@ -129,20 +148,20 @@ propertyRoute.get("/:id", async (req, res) => {
         })
     }
 })
-propertyRoute.get("/ratings/:id",async(req, res)=>{
-    const {id} = req.params;
-    try{
+propertyRoute.get("/ratings/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
         const findReview = await Property.findById(id).populate({
-            path : 'rating.user',
+            path: 'rating.user',
             select: 'username'
         })
-        if(findReview ==null){
+        if (findReview == null) {
             return null
         }
         return res.json({
-            review: findReview.rating.map((item)=> item)
+            review: findReview.rating.map((item) => item)
         })
-    }catch(e){
+    } catch (e) {
         res.status(404).json({
             message: e.message
         })

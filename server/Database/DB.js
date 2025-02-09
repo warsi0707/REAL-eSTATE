@@ -4,10 +4,10 @@ const { number, string } = require("zod")
 
 const AdminSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
-    password: String, 
+    password: String,
 })
 const ContactSchema = new mongoose.Schema({
-    name: {type: String, required: true},
+    name: { type: String, required: true },
     email: String,
     phone: String
 })
@@ -30,8 +30,8 @@ const PropertySchema = new mongoose.Schema({
     date: Date,
     sizes: String,
     area: String,
-    launchDate : String,
-    startDate : String,
+    launchDate: String,
+    startDate: String,
     rating: [
         {
             user: {

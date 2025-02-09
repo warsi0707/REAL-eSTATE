@@ -1,7 +1,6 @@
-import axios from "axios"
 import {BackendUrl} from "../providers/Provider"
-import { createContext, useEffect, useState } from "react";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { createContext, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { adminAuthenticatedAtom, userAuthenticatedAtom } from "../atom/Atom";
 
 const AuthContext = createContext()

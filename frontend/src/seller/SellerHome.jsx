@@ -4,7 +4,6 @@ import useSellerData from '../hooks/useSellerData'
 import { useRecoilState } from 'recoil'
 import { messageAtom, successAtom } from '../atom/Atom'
 import { BackendUrl } from '../providers/Provider'
-import { useParams } from 'react-router-dom'
 import Message from '../components/Message'
 
 export default function SellerHome() {
@@ -26,12 +25,20 @@ export default function SellerHome() {
       setSuccess(false)
     }
   }
+  if(data.length ===0){
+    return (
+      <div className='w-full h-screen'>
+        <SellerNavbar/>
+       <h1 className='mt-20 text-3xl font-bold text-center'>Data Not found</h1>
+      </div>
+    )
+  }
   return (
     <div className='w-full '>
       <SellerNavbar/>
      {message && <Message message={message} success={success}/>}
-      {data.map((item)=>(
-        <div key={item._id} className='mx-auto my-10 mt-40 ml-52'>
+     {data.map((item)=>(
+        <div key={item._id} className='mx-auto my-10'>
           <SellerCard title={item.title}  price={item.price} location={item.location} image={item.image} id={item._id} ondelete={Delete} />
         </div>
       ))}
