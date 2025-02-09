@@ -11,7 +11,7 @@ const { adminRoute } = require('./Routes/admin')
 const { propertyRoute } = require('./Routes/property')
 const { userRouter } = require('./Routes/user')
 
-app.use(express.static(path.join(__dirname, 'client','dist')))
+app.use(express.static(path.join(__dirname, 'frontend','dist')))
 app.use(cookieParser())
 app.use(express.json())
 
@@ -20,13 +20,17 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true
 }))
-
+app.get("/",(req, res)=>{
+    res.json({
+        message: "Working good"
+    })
+})
 app.use("/api/v1/admin",adminRoute)
 app.use("/api/v1/property", propertyRoute)
 app.use("/api/v1/user", userRouter)
 
 app.get("*",(req, res) =>{
-    res.sendFile(path.resolve(__dirname,'client','dist','index.html'))
+    res.sendFile(path.resolve(__dirname,'frontend','dist','index.html'))
 })
 
 const Main =async()=>{
