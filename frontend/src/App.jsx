@@ -29,7 +29,7 @@ function App() {
         <Route path="/signup" element={<><Navbar open={open} onClose={()=> setOpen(true)}/><Signup/><Footer/></>}/>
         <Route path="/seller/signup" element={<SellerSignup/>}/>
         <Route path="/seller/signin" element={isAdminLogin?<SellerDashboard/>: <SellerLogin/>}/>
-        <Route path="/seller/dashboard" element={isAdminLogin? <SellerDashboard/>: <SellerLogin/>}/>
+        <Route path="/seller/dashboard" element={ <SellerDashboard/>}/>
         <Route path="/seller/add" element={<AddProperty/>}/>
         <Route path="/seller/:id" element={isAdminLogin?<EditProperty/>:<SellerLogin/>}/>
         <Route path="/seller/contact" element={isAdminLogin?<SellerContact/>:<SellerLogin/>}/>
