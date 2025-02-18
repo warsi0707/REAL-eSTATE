@@ -15,16 +15,12 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true
 }))
-
-app.use(cookieParser())
 app.use(express.json())
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname,"frontend","dist")))
 
-
-app.get("/",(req, res)=>{
-    res.json({
-        message: "Working good"
-    })
+app.get("/", (req, res) => {
+    res.send("Hello world")
 })
 app.use("/api/v1/admin",adminRoute)
 app.use("/api/v1/property", propertyRoute)
