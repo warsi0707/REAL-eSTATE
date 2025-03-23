@@ -1,11 +1,12 @@
-import { useRecoilValue } from 'recoil'
-import {userAuthenticatedAtom } from '../atom/Atom'
+
 import useLogout from '../hooks/useLogout'
 import {Link} from 'react-router-dom'
+import { useContext } from 'react'
+import AuthContext from '../context/authContext'
 
 export default function Navbar({onClose}) {
   const logout = useLogout()
-  const isUserLogin = useRecoilValue(userAuthenticatedAtom)
+  const {isUserLogin} = useContext(AuthContext)
   return (
     <>
      <div className='mx-auto bg-blue-500 max-w-[1300px] py-7 rounded-b-full px-10 flex justify-between sticky top-0'>
