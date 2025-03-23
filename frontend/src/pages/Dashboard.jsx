@@ -6,13 +6,13 @@ import { useState } from "react";
 import useThreeData from "../hooks/useThreeData";
 import Contact from "../components/Contact";
 import useProjects from "../hooks/useProjects";
-
 export default function Dashboard() {
   const threeData = useThreeData()
   const [open, setOpen] = useState(false)
   const [contacts, setContacts] = useState(false)
   const projectss = useProjects()
   return (
+    <>
     <div className="">
       {/* <Search/> */}
       <div className="max-w-[1100px] mx-auto my-16 space-y-10">
@@ -52,5 +52,6 @@ export default function Dashboard() {
         <Sell/>
       </div>
     </div>
+    </>
   );
 }

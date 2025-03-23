@@ -15,6 +15,5 @@ export default function Navbar({onClose}) {
       </div>
     </div>   
     </>
-   
   )
 }

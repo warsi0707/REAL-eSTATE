@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil'
 import { messageAtom, passwordAtom, successAtom, usernameAtom } from '../atom/Atom'
 import { BackendUrl } from '../providers/Provider'
 import Message from "../components/Message"
-
 export default function Login({open, onClose}) { 
   const [username, setUsername] = useRecoilState(usernameAtom)
   const [password, setPassword] = useRecoilState(passwordAtom)

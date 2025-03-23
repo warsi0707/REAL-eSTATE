@@ -29,7 +29,6 @@ app.use("/api/v1/user", userRouter)
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend','dist', 'index.html'))
 })
-
 const Main =async()=>{
     try{
         await mongoose.connect(MONGO_URL)

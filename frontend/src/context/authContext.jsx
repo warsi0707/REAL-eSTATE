@@ -45,10 +45,8 @@ export  function Auth({children}){
         }
     }
     useEffect(()=>{
-        setInterval(()=>{
             GetAdmin()
             GetUser()
-        },1000)
     },[])
     
     return (

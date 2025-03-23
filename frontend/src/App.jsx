@@ -31,7 +31,7 @@ function App() {
         <Route path="/seller/signin" element={isAdminLogin?<SellerDashboard/>: <SellerLogin/>}/>
         <Route path="/seller/dashboard" element={ <SellerDashboard/>}/>
         <Route path="/seller/add" element={<AddProperty/>}/>
-        <Route path="/seller/:id" element={isAdminLogin?<EditProperty/>:<SellerLogin/>}/>
+        <Route path="/seller/:id" element={isAdminLogin &&<EditProperty/>}/>
         <Route path="/seller/contact" element={isAdminLogin?<SellerContact/>:<SellerLogin/>}/>
       </Routes>
     </BrowserRouter>
