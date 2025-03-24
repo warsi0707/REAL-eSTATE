@@ -32,6 +32,8 @@ function Login({open, setopen}) {
           setopen(false)
           navigate("/")
         }, 2000);
+      }else{
+        toast.error(result.message)
       }
     }catch(e){
       toast.error(e.message)

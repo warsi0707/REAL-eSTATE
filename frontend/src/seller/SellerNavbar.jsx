@@ -18,7 +18,7 @@ import toast from 'react-hot-toast'
       toast.success(result.message)
       setTimeout(() => {
         setIsAdminLogin(false)
-        navigate("/seller/signin")
+        navigate("/")
       }, 2000);
     }else{
       toast.error(result.message)
