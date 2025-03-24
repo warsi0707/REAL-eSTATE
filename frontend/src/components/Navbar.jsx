@@ -1,10 +1,10 @@
 
 import useLogout from '../hooks/useLogout'
 import {Link} from 'react-router-dom'
-import { useContext } from 'react'
+import { memo, useContext } from 'react'
 import AuthContext from '../context/authContext'
 
-export default function Navbar({onClose}) {
+function Navbar({onClose}) {
   const logout = useLogout()
   const {isUserLogin} = useContext(AuthContext)
   return (
@@ -19,3 +19,5 @@ export default function Navbar({onClose}) {
     </>
   )
 }
+
+export default memo(Navbar)

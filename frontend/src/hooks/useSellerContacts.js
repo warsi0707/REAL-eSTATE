@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import  { useCallback, useState } from 'react'
 import { BackendUrl } from '../providers/Provider'
 
 export default function useSellerContacts() {
  const [contacts , setContacts] = useState([])
    try{
-     const GetContacts =async()=>{
+     const GetContacts =useCallback(async()=>{
        const response = await fetch(`${BackendUrl}/admin/contacts`,{
          method : 'GET',
          credentials: 'include'
@@ -15,10 +15,9 @@ export default function useSellerContacts() {
        }else{
         setContacts(null)
        }
-     }
-     useEffect(()=>{
-        GetContacts()
      },[])
+        GetContacts()
+
    }catch(e){
      console.error(e)
    }

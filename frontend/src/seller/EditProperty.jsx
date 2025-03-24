@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import SellerNavbar from "./SellerNavbar";
 import { useRecoilState } from "recoil";
 import { messageAtom, successAtom } from "../atom/Atom";
 import { useNavigate, useParams } from "react-router-dom";
-import Message from "../components/Message";
 import { BackendUrl } from "../providers/Provider";
 
 export default function EditProperty() {

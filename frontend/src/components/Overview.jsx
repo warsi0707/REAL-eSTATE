@@ -1,6 +1,6 @@
-import React from "react";
+import  { memo } from "react";
 
-export default function Overview({icon, title,value}) {
+ function Overview({icon, title,value}) {
   return (
     <div className="flex w-40 justify-evenly">
       <p>
@@ -13,3 +13,5 @@ export default function Overview({icon, title,value}) {
     </div>
   );
 }
+
+export default memo(Overview)

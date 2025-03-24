@@ -1,25 +1,19 @@
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import {
-  messageAtom,
-  passwordAtom,
-  successAtom,
-  usernameAtom,
-} from "../atom/Atom";
 import { BackendUrl } from "../providers/Provider";
-import Message from "../components/Message";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import toast from "react-hot-toast";
 
 export default function SellerSignup() {
-  const [username, setUsername] = useRecoilState(usernameAtom);
-  const [password, setPassword] = useRecoilState(passwordAtom);
-  const [message, setMessage] = useRecoilState(messageAtom);
-  const [success, setSuccess] = useRecoilState(successAtom);
+  const usernameRef = useRef()
+  const passwordRef = useRef()
   const backendUrl = BackendUrl;
   const navigate = useNavigate();
 
   const Signup = async (e) => {
     e.preventDefault();
+    const username = usernameRef.current.value;
+    const password = passwordRef.current.value;
     const response = await fetch(`${backendUrl}/admin/signup`, {
       method: "POST",
       body: JSON.stringify({ username, password }),
@@ -29,20 +23,12 @@ export default function SellerSignup() {
     });
     const result = await response.json();
     if (response.ok) {
-      setMessage(result.message);
-      setSuccess(true);
-      setUsername("");
-      setPassword("");
+      toast.success(result.message)
       setTimeout(() => {
-        setMessage("");
         navigate("/seller/signin");
       }, 3000);
     } else {
-      setSuccess(false);
-      setMessage(result.message);
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
+      toast.error(result.message)
     }
   };
   return (
@@ -53,15 +39,13 @@ export default function SellerSignup() {
             <h1 className="text-xl font-bold text-center">Seller Signup</h1>
             <form className="space-y-3">
               <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                ref={usernameRef}
                 className="w-full px-5 py-2 text-xl border border-gray-400 rounded-md"
                 type="text"
                 placeholder="username"
               />
               <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                ref={passwordRef}
                 className="w-full px-5 py-2 text-xl border border-gray-400 rounded-md"
                 type="password"
                 placeholder="password"
@@ -85,11 +69,6 @@ export default function SellerSignup() {
             </form>
           </div>
         </div>
-        {message && (
-          <div>
-            <Message message={message} success={success} />
-          </div>
-        )}
       </div>
     </div>
   );

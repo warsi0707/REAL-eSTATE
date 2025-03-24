@@ -1,33 +1,29 @@
-import React from 'react'
+import { memo, useCallback, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { adminAuthenticatedAtom, messageAtom, successAtom } from '../atom/Atom'
 import { BackendUrl } from '../providers/Provider'
-import Message from '../components/Message'
+import AuthContext from '../context/authContext'
+import toast from 'react-hot-toast'
 
-export default function SellerNavbar() {
-  const [isAdminLogin, setIsAdminLogin] = useRecoilState(adminAuthenticatedAtom)
-  const [message, setMessage] = useRecoilState(messageAtom)
-  const [success, setSuccess] = useRecoilState(successAtom)
+ function SellerNavbar() {
+  const {isAdminLogin, setIsAdminLogin} = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const Logout =async()=>{
+  const Logout =useCallback(async()=>{
     const response = await fetch(`${BackendUrl}/admin/logout`,{
       method: 'POST',
       credentials: 'include'
     })
     const result = await response.json()
     if(response.ok){
-      setMessage(result.message)
-      setIsAdminLogin(false)
+      toast.success(result.message)
       setTimeout(() => {
+        setIsAdminLogin(false)
         navigate("/seller/signin")
-        setMessage("")
       }, 2000);
     }else{
-      setMessage(result.message)
+      toast.error(result.message)
     }
-  }
+  },[])
   return (
     <>
     <div className='flex items-center justify-between w-full px-5 py-2 bg-gray-500 md:py-5'>
@@ -37,11 +33,14 @@ export default function SellerNavbar() {
             </div>
         <div className='flex gap-2 md:gap-10 md:text-xl'>
           <Link to={"/seller/contact"} className='flex items-center justify-center transition-all duration-300 border-2 border-green-400 rounded-md md:p-2 hover:bg-green-400 hover:shadow-xl'>Contacts</Link>
-          {isAdminLogin&& <Link className='flex items-center justify-center transition-all duration-300 border-2 border-purple-400 rounded-md md:p-2 hover:bg-purple-400 hover:shadow-xl' to={"/seller/add"}>Publish your property</Link>}
+          {isAdminLogin&& <>
+            <Link className='flex items-center justify-center transition-all duration-300 border-2 border-purple-400 rounded-md md:p-2 hover:bg-purple-400 hover:shadow-xl' to={"/seller/add"}>Publish your property</Link>
             <button onClick={Logout} className='p-2 transition-all duration-300 border border-red-500 rounded-md hover:bg-red-500 hover:shadow-md'>Logout</button>
+          </>}
         </div>
     </div>
-   {message && <Message message={message} success={success}/>}
+
     </>
   )
 }
+export default memo(SellerNavbar)

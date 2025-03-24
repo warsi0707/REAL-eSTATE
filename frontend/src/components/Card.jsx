@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 
-export default function Card({
+ function Card({
   image,
   id,
   title,
@@ -37,3 +37,4 @@ export default function Card({
     </Link>
   );
 }
+export default memo(Card)

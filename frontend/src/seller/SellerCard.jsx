@@ -1,13 +1,9 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { BackendUrl } from '../providers/Provider'
-import { useRecoilState } from 'recoil'
-import { messageAtom, successAtom } from '../atom/Atom'
+import toast from 'react-hot-toast'
 
 
 export default function SellerCard({title, location, price, image, id, ondelete}) {
-  const [message, setMessage] = useRecoilState(messageAtom)
-  const [success, setSuccess] = useRecoilState(successAtom)
   const Delete =async()=>{
     const response = await fetch(`${BackendUrl}/admin/property/${id}`,{
       method :'DELETE',
@@ -15,11 +11,9 @@ export default function SellerCard({title, location, price, image, id, ondelete}
     })
     const result = await response.json()
     if(response.ok){
-      setMessage(result.message)
-      setSuccess(true)
+      toast.success(result.message)
     }else{
-      setMessage(result.message)
-      setSuccess(false)
+      toast.error(result.message)
     }
   }
   return (

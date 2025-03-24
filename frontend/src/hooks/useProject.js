@@ -1,11 +1,10 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { BackendUrl } from '../providers/Provider'
-import {useSetRecoilState } from 'recoil'
-import { projectsAtom } from '../atom/Atom'
+
 
 export default function useProject() {
-    const  setProjects = useSetRecoilState(projectsAtom)
-    const Projects =async()=>{
+    const  [projects, setProjects]= useState([])
+    const Projects =useCallback( async()=>{
         const response = await fetch(`${BackendUrl}/property/three`,{
             method: "GET"
         })
@@ -15,7 +14,7 @@ export default function useProject() {
         }else{
             return null
         }
-    }
+    },[])
     useEffect(()=>{
         Projects()
     },[])

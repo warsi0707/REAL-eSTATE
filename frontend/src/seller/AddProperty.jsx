@@ -1,27 +1,33 @@
-import { useRecoilState } from "recoil";
 import SellerNavbar from "./SellerNavbar";
-import { messageAtom, successAtom } from "../atom/Atom";
 import { BackendUrl } from "../providers/Provider";
-import { useState } from "react";
-import Message from "../components/Message";
+import { memo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import AddPropertyInput from "../components/AddPropertyInput";
+import toast from "react-hot-toast";
 
-export default function AddProperty() {
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
-  const [city, setCity] = useState("");
-  const [price, setPrice] = useState(0);
-  const [bhk, setBhk] = useState(0);
-  const [image, setImage] = useState("");
-  const [date, setDate] = useState("");
-  const [sizes, setSizes] = useState("");
-  const [area, setArea] = useState("");
-  const [message, setMessage] = useRecoilState(messageAtom);
-  const [success, setSuccess] = useRecoilState(successAtom);
+ function AddProperty() {
+  const titleRef = useRef()
+  const locationRef = useRef()
+  const cityRef = useRef()
+  const priceRef = useRef()
+  const bhkRef = useRef()
+  const imageRef = useRef()
+  const sizesRef = useRef()
+  const areaRef = useRef()
+
   const navigate = useNavigate();
 
   const AddData = async (e) => {
     e.preventDefault();
+    const title = titleRef.current.value;
+    const location = locationRef.current.value;
+    const city = cityRef.current.value;
+    const sizes = sizesRef.current.value;
+    const price = priceRef.current.value;
+    const bhk = bhkRef.current.value;
+    const image = imageRef.current.value;
+    const area = areaRef.current.value;
+
     const response = await fetch(`${BackendUrl}/admin/property`, {
       method: "POST",
       credentials: "include",
@@ -32,25 +38,21 @@ export default function AddProperty() {
         title,
         location,
         city,
+        sizes,
         price,
         bhk,
         image,
-        date,
-        sizes,
         area,
       }),
     });
     const result = await response.json();
     if (response.ok) {
-      setMessage(result.message);
-      setSuccess(true);
+      toast.success(result.message)
       setTimeout(() => {
-        setMessage("");
         navigate("/seller/dashboard");
       }, 2000);
     } else {
-      setMessage(result.message);
-      setSuccess(false);
+      toast.error(result.message)
     }
   };
   return (
@@ -58,118 +60,23 @@ export default function AddProperty() {
       <SellerNavbar />
       <div className="p-5 mx-auto mt-10 bg-gray-400 rounded-lg max-w-[700px] py-8">
         <div className="">
-          {message && <Message message={message} success={success} />}
         </div>
 
         <form onSubmit={AddData} className="space-y-5">
           <div className="space-y-3">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="" className="text-lg">
-                Title
-              </label>
-              <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-5 py-2 text-lg rounded-md"
-                type="text"
-                placeholder="Title"
-              />
-            </div>
+           <AddPropertyInput refs={titleRef} label={"Title"} placeholder={"Title"} type={"text"}/>
             <div className="flex justify-between ">
-              <div>
-                <label htmlFor="" className="text-lg">
-                  Location
-                </label>
-                <input
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="w-full px-5 py-2 text-lg rounded-md"
-                  type="text"
-                  placeholder="Location"
-                />
-              </div>
-              <div>
-                <label htmlFor="" className="text-lg">
-                  City
-                </label>
-                <input
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  className="w-full px-5 py-2 text-lg rounded-md"
-                  type="text"
-                  placeholder="City"
-                />
-              </div>
+            <AddPropertyInput refs={locationRef} label={"Location"} placeholder={"Mumbai"} type={"text"}/>
+            <AddPropertyInput refs={cityRef} label={"City"} placeholder={"Thane"} type={"text"}/>
             </div>
             <div className="flex gap-3">
-              <div>
-                <label htmlFor="" className="text-lg">
-                  Area
-                </label>
-                <input
-                  value={area}
-                  onChange={(e) => setArea(e.target.value)}
-                  className="w-full px-5 py-2 text-lg rounded-md"
-                  type="text"
-                  placeholder="Area"
-                />
-              </div>
-              <div>
-                <label htmlFor="" className="text-lg">
-                  Price
-                </label>
-                <input
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  className="w-full px-5 py-2 text-lg rounded-md"
-                  type="number"
-                  placeholder="Prise In Lakhs"
-                />
-              </div>
-              <div>
-                <label htmlFor="" className="text-lg">
-                  {" "}
-                  BHK
-                </label>
-                {/* <select  value={bhk} onChange={(e)=> setBhk(e.target.value)} className='w-full px-2 py-2 text-lg rounded-md cursor-pointer' name="bhk" id="bhk">
-                  <option value='1' >1</option>
-                  <option value='2' >2</option>
-                  <option value='3'>3</option>
-              </select> */}
-                <input
-                  value={bhk}
-                  onChange={(e) => setBhk(e.target.value)}
-                  className="w-full px-5 py-2 text-lg rounded-md"
-                  type="number"
-                  placeholder="BHK"
-                />
-              </div>
-              <div>
-                <label htmlFor="" className="text-lg">
-                  Start Date
-                </label>
-                <input
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full px-5 py-2 text-lg rounded-md"
-                  type="date"
-                  placeholder="BHK"
-                />
-              </div>
+            <AddPropertyInput refs={areaRef} label={"Area"} placeholder={"area"} type={"text"}/>
+            <AddPropertyInput refs={priceRef} label={"Price"} placeholder={"1256"} type={"number"}/>
+            <AddPropertyInput refs={bhkRef} label={"BHK"} placeholder={"2"} type={"number"}/>
+            {/* <AddPropertyInput refs={dateRef} label={"Star Date"}  type={"date"}/> */}
             </div>
 
-            <div className="flex flex-col gap-2 mb-10">
-              <label htmlFor="" className="text-lg">
-                Image link
-              </label>
-              <input
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                className="w-full px-5 py-2 text-lg rounded-md"
-                type="text"
-                placeholder="Image Link"
-              />
-            </div>
+            <AddPropertyInput refs={imageRef} label={"Image Link"} placeholder={""} type={"text"} />
           </div>
           <button
             type="submit"
@@ -182,3 +89,4 @@ export default function AddProperty() {
     </>
   );
 }
+export default memo(AddProperty)

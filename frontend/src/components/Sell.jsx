@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Sell() {
+ function Sell() {
   return (
     <div className='flex flex-col justify-center w-full gap-5 py-10 border border-purple-800 bg-purple-00 border- rounded-xl'>
         <h1 className='px-2 mx-auto text-xl'>List your property & connect with clients fatser!</h1>
@@ -8,3 +9,4 @@ export default function Sell() {
     </div>
   )
 }
+export default memo(Sell)

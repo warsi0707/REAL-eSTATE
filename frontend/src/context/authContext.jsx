@@ -1,14 +1,12 @@
 import {BackendUrl} from "../providers/Provider"
-import { createContext, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { adminAuthenticatedAtom, userAuthenticatedAtom } from "../atom/Atom";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 const AuthContext = createContext()
 
 export  function Auth({children}){
-    const [isUserLogin, setIsUserLogin] = useRecoilState(userAuthenticatedAtom)
-    const [isAdminLogin, setIsAdminLogin] = useRecoilState(adminAuthenticatedAtom)
-    const GetAdmin =async()=>{
+    const [isUserLogin, setIsUserLogin] = useState(false)
+    const [isAdminLogin, setIsAdminLogin] = useState(false)
+    const GetAdmin =useCallback( async()=>{
         try{
             const response = await fetch(`${BackendUrl}/admin/verify`,{
                 method: "GET",
@@ -25,8 +23,8 @@ export  function Auth({children}){
         }catch(error){
             console.error(error)
         }
-    }
-    const GetUser =async()=>{
+    },[])
+    const GetUser =useCallback( async()=>{
         try{
             const response = await fetch(`${BackendUrl}/user/verify`,{
                 method: "GET",
@@ -43,7 +41,7 @@ export  function Auth({children}){
         }catch(error){
             console.error(error)
         }
-    }
+    },[])
     useEffect(()=>{
             GetAdmin()
             GetUser()

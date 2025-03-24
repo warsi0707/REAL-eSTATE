@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BackendUrl } from "../providers/Provider";
 
 export default function useProjects(){
     const [projects, setProjects] = useState([])
-    const FetchProjects =async()=>{
+    const FetchProjects =useCallback( async()=>{
         const response = await fetch(`${BackendUrl}/property/projects`,{
             method: 'GET'
         })
@@ -13,7 +13,7 @@ export default function useProjects(){
         }else{
             setProjects(null)
         }
-    }
+    },[])
     useEffect(()=>{
         FetchProjects()
     },[])

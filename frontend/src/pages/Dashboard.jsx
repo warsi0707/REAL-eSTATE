@@ -2,11 +2,13 @@ import Card from "../components/Card";
 import HousingPick from "../components/HousingPick";
 import Projects from "../components/Projects";
 import Sell from "../components/Sell";
-import { useState } from "react";
+import { memo, useState } from "react";
 import useThreeData from "../hooks/useThreeData";
 import Contact from "../components/Contact";
 import useProjects from "../hooks/useProjects";
-export default function Dashboard() {
+
+
+ function Dashboard() {
   const threeData = useThreeData()
   const [open, setOpen] = useState(false)
   const [contacts, setContacts] = useState(false)
@@ -55,3 +57,4 @@ export default function Dashboard() {
     </>
   );
 }
+export default memo(Dashboard)

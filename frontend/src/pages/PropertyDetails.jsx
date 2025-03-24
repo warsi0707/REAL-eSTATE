@@ -1,25 +1,14 @@
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { BackendUrl } from "../providers/Provider";
 import { useParams } from "react-router-dom";
 import Overview from "../components/Overview";
 import useContacts from "../hooks/useContacts";
-import Message from "../components/Message";
 
-export default function PropertyDetails() {
+ function PropertyDetails() {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const {
-    name,
-    email,
-    phone,
-    setEmail,
-    setPhone,
-    setName,
-    Contacts,
-    message,
-    success,
-  } = useContacts();
-  const Property = async () => {
+  const {nameRef, emailRef, phoneRef,Contacts} = useContacts()
+  const Property =useCallback( async () => {
     const response = await fetch(`${BackendUrl}/property/${id}`, {
       method: "GET",
     });
@@ -27,7 +16,7 @@ export default function PropertyDetails() {
     if (response.ok) {
       setData(result.ammenties);
     }
-  };
+  },[])
   useEffect(() => {
     Property();
   }, []);
@@ -96,22 +85,19 @@ export default function PropertyDetails() {
           <h1 className="mb-5 text-xl">Contact seller</h1>
           <div className="w-full space-y-2">
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              ref={nameRef}
               className="w-full p-2 border-b-2 rounded-md"
               type="text"
               placeholder="name"
             />
             <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              ref={emailRef}
               className="w-full p-2 border-b-2 rounded-md"
               type="email"
               placeholder="Email"
             />
             <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              ref={phoneRef}
               className="w-full p-2 border-b-2 rounded-md"
               type="number"
               placeholder="Phone"
@@ -122,10 +108,10 @@ export default function PropertyDetails() {
             >
               Contact
             </button>
-            {message && <Message message={message} success={success} />}
           </div>
         </div>
       </div>
     </div>
   );
 }
+export default memo(PropertyDetails)

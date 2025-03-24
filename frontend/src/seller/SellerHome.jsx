@@ -1,15 +1,10 @@
 import SellerNavbar from './SellerNavbar'
 import SellerCard from './SellerCard'
-import useSellerData from '../hooks/useSellerData'
-import { useRecoilState } from 'recoil'
-import { messageAtom, successAtom } from '../atom/Atom'
 import { BackendUrl } from '../providers/Provider'
-import Message from '../components/Message'
+import toast from 'react-hot-toast'
+import { memo } from 'react'
 
-export default function SellerHome() {
-  const data =useSellerData()
-  const [message, setMessage] = useRecoilState(messageAtom)
-  const [success, setSuccess] = useRecoilState(successAtom)
+function SellerHome({data}) {
   
   const Delete =async(id)=>{
     const response = await fetch(`${BackendUrl}/admin/property/${id}`,{
@@ -18,11 +13,9 @@ export default function SellerHome() {
     })
     const result = await response.json()
     if(response.ok){
-      setMessage(result.message)
-      setSuccess(true)
+      toast.success(result.message)
     }else{
-      setMessage(result.message)
-      setSuccess(false)
+      toast.error(result.message)
     }
   }
   if(data.length ===0){
@@ -36,7 +29,6 @@ export default function SellerHome() {
   return (
     <div className='w-full '>
       <SellerNavbar/>
-     {message && <Message message={message} success={success}/>}
      {data.map((item)=>(
         <div key={item._id} className='mx-auto my-10'>
           <SellerCard title={item.title}  price={item.price} location={item.location} image={item.image} id={item._id} ondelete={Delete} />
@@ -45,3 +37,4 @@ export default function SellerHome() {
     </div>
   )
 }
+export default memo(SellerHome)

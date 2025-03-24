@@ -1,17 +1,17 @@
-import { useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useCallback, useRef } from 'react'
 import { BackendUrl } from '../providers/Provider'
-import { messageAtom, successAtom } from '../atom/Atom'
+import toast from 'react-hot-toast'
 
 export default function useContacts() {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [phone, setPhone] = useState("")
-    const [message, setMesage] = useRecoilState(messageAtom)
-    const [success, setSuccess] = useRecoilState(successAtom)
+    const nameRef = useRef()
+    const emailRef = useRef()
+    const phoneRef = useRef()
   
-    const Contacts = async(e)=>{
+    const Contacts =useCallback(async(e)=>{
         e.preventDefault()
+        const name = nameRef.current.value;
+        const email = emailRef.current.value;
+        const phone = phoneRef.current.value
         const response = await fetch(`${BackendUrl}/user/contact`,{
             method: 'POST',
             headers: {
@@ -21,21 +21,10 @@ export default function useContacts() {
         })
         const result = await response.json()
         if(response.ok){
-            setMesage(result.message)
-            setSuccess(true)
-            setName("")
-            setEmail("")
-            setPhone("")
-            setTimeout(() => {
-                setMesage("")
-            }, 2000);
+            toast.success(result.message)
         }else{
-            setMesage(result.message)
-            setSuccess(false)
-            setTimeout(() => {
-                setMesage("")
-            }, 2000);
+            toast.error(result.message)
         }
-    }
-    return {name, email, phone, Contacts,message,success, setName, setEmail, setPhone}
+    },[])
+    return {nameRef, emailRef, phoneRef, Contacts}
 }

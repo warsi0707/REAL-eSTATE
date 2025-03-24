@@ -1,6 +1,7 @@
+import { memo } from "react";
 import useOneData from "../hooks/useOneData";
 
-export default function HousingPick({ onClose }) {
+ function HousingPick({ onClose }) {
   const oneData = useOneData();
   return (
     <>
@@ -37,3 +38,5 @@ export default function HousingPick({ onClose }) {
     </>
   );
 }
+
+export default memo(HousingPick)

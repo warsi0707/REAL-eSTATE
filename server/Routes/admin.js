@@ -88,7 +88,7 @@ adminRoute.get("/verify", adminAuth, async (req, res) => {
 })
 //post the property
 adminRoute.post("/property", adminAuth, async (req, res) => {
-    const { title, location, city, sizes, price, bhk, image, area, } = req.body;
+    const { title, location, city, sizes, price, bhk, image, area } = req.body;
     const adminId = req.user;
     try {
         if (!title, !location, !city, !sizes, !price, !image) {

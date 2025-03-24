@@ -1,8 +1,9 @@
-import Message from './Message'
+
+import { memo } from 'react'
 import useContacts from '../hooks/useContacts'
 
-export default function Contact({contactsOpen, onClose}) {
-    const {name, email, phone, setEmail, setPhone, setName,Contacts, message, success} = useContacts()
+ function Contact({contactsOpen, onClose}) {
+    const {nameRef, emailRef, phoneRef,Contacts} = useContacts()
   return (
     <div>
     <div className="fixed top-0 left-0 flex justify-center w-screen h-screen bg-slate-600 opacity-90"></div>
@@ -16,22 +17,19 @@ export default function Contact({contactsOpen, onClose}) {
           </div>
           <div className="flex flex-col gap-2 mt-3 ">
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              ref={nameRef}
               className="p-2 rounded-md"
               type="text"
               placeholder="Name"
             />
             <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              ref={emailRef}
               className="p-2 rounded-md"
               type="text"
               placeholder="Email"
             />
             <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              ref={phoneRef}
               className="p-2 rounded-md"
               type="number"
               placeholder="Phone"
@@ -45,10 +43,9 @@ export default function Contact({contactsOpen, onClose}) {
           </div>
         </div>
       </div>
-      {message && (
-        <Message message={message} success={success}/>
-      )}
     </div>
   </div>
   )
 }
+
+export default memo(Contact)
