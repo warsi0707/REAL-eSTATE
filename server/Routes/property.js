@@ -1,6 +1,6 @@
 const Router = require("express")
-const { Property } = require("../Database/DB")
-const { userAuth, adminAuth } = require("../Middleware/auth")
+const { Property, Contact } = require("../Database/DB")
+const { userAuth} = require("../Middleware/auth")
 const propertyRoute = Router()
 
 //all property
@@ -45,25 +45,6 @@ propertyRoute.get("/one", async (req, res) => {
 propertyRoute.get("/three", async (req, res) => {
     try {
         const allProperty = await Property.find({}).limit(3)
-        if (allProperty == null) {
-            return res.json({
-                message: "No property listed"
-            })
-        }
-        return res.json({
-            properties: allProperty
-        })
-
-    } catch (error) {
-        res.status(404).json({
-            message: error.message
-        })
-    }
-})
-//Three property
-propertyRoute.get("/projects", async (req, res) => {
-    try {
-        const allProperty = (await Property.find({}).limit(3)).reverse()
         if (allProperty == null) {
             return res.json({
                 message: "No property listed"
@@ -167,6 +148,34 @@ propertyRoute.get("/ratings/:id", async (req, res) => {
         })
     }
 })
+
+
+propertyRoute.post("/contact/:id", async (req, res) => {
+    const { name, message, phone } = req.body;
+    const {id} = req.params;
+    try {
+        if (!name, !message, !phone) {
+            return res.status(404).json({
+                message: "All input required!"
+            })
+        }
+        const contact =await Contact.create({
+            name,
+            message,
+            phone,
+            property: id
+        })
+        res.json({
+            contact: contact,
+            message: "Message sent. Seller will contact you",
+        })
+    } catch (e) {
+        res.status(404).json({
+            message: e.message
+        })
+    }
+})
+
 module.exports = {
     propertyRoute
 }

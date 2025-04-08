@@ -1,7 +1,8 @@
 import { memo } from "react";
 import useOneData from "../hooks/useOneData";
+import { Link } from "react-router-dom";
 
- function HousingPick({ onClose }) {
+ function HousingPick() {
   const oneData = useOneData();
   return (
     <>
@@ -19,12 +20,11 @@ import useOneData from "../hooks/useOneData";
               <h1 className="text-lg font-bold md:text-2xl">{item.price} L</h1>
               <p className="text-gray-700 md:text-lg">1, 2 BHK Apartments</p>
             </div>
-            <button
-              onClick={onClose}
+            <Link to={`/property/${item._id}`}
               className="flex justify-center w-32 py-2 text-white transition-all duration-300 bg-purple-800 md:text-xl md:mx-auto md:pl-0 md:w-72 rounded-xl hover:cursor-pointer hover:bg-purple-600"
             >
               Contact
-            </button>
+            </Link>
           </div>
           <div className="image ">
             <img

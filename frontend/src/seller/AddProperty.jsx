@@ -1,20 +1,19 @@
 import SellerNavbar from "./SellerNavbar";
 import { BackendUrl } from "../providers/Provider";
-import { memo, useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import AddPropertyInput from "../components/AddPropertyInput";
+import PropertyInput from "../components/AddPropertyInput";
 import toast from "react-hot-toast";
 
- function AddProperty() {
-  const titleRef = useRef()
-  const locationRef = useRef()
-  const cityRef = useRef()
-  const priceRef = useRef()
-  const bhkRef = useRef()
-  const imageRef = useRef()
-  const sizesRef = useRef()
-  const areaRef = useRef()
-
+export default function AddProperty() {
+  const titleRef = useRef();
+  const locationRef = useRef();
+  const cityRef = useRef();
+  const priceRef = useRef();
+  const bhkRef = useRef();
+  const imageRef = useRef();
+  const sizesRef = useRef();
+  const areaRef = useRef();
   const navigate = useNavigate();
 
   const AddData = async (e) => {
@@ -28,7 +27,7 @@ import toast from "react-hot-toast";
     const image = imageRef.current.value;
     const area = areaRef.current.value;
 
-    const response = await fetch(`${BackendUrl}/admin/property`, {
+    const response = await fetch(`${BackendUrl}/user/property`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -47,36 +46,75 @@ import toast from "react-hot-toast";
     });
     const result = await response.json();
     if (response.ok) {
-      toast.success(result.message)
+      toast.success(result.message);
       setTimeout(() => {
         navigate("/seller/dashboard");
       }, 2000);
     } else {
-      toast.error(result.message)
+      toast.error(result.message);
     }
   };
   return (
     <>
       <SellerNavbar />
       <div className="p-5 mx-auto mt-10 bg-gray-400 rounded-lg max-w-[700px] py-8">
-        <div className="">
-        </div>
+        <div className=""></div>
 
         <form onSubmit={AddData} className="space-y-5">
           <div className="space-y-3">
-           <AddPropertyInput refs={titleRef} label={"Title"} placeholder={"Title"} type={"text"}/>
+            <PropertyInput
+              refs={titleRef}
+              label={"Title"}
+              placeholder={"Title"}
+              type={"text"}
+            />
             <div className="flex justify-between ">
-            <AddPropertyInput refs={locationRef} label={"Location"} placeholder={"Mumbai"} type={"text"}/>
-            <AddPropertyInput refs={cityRef} label={"City"} placeholder={"Thane"} type={"text"}/>
+              <PropertyInput
+                refs={locationRef}
+                label={"Location"}
+                placeholder={"Mumbai"}
+                type={"text"}
+              />
+              <PropertyInput
+                refs={cityRef}
+                label={"City"}
+                placeholder={"Thane"}
+                type={"text"}
+              />
+              <PropertyInput
+                refs={sizesRef}
+                label={"City"}
+                placeholder={"Thane"}
+                type={"text"}
+              />
             </div>
             <div className="flex gap-3">
-            <AddPropertyInput refs={areaRef} label={"Area"} placeholder={"area"} type={"text"}/>
-            <AddPropertyInput refs={priceRef} label={"Price"} placeholder={"1256"} type={"number"}/>
-            <AddPropertyInput refs={bhkRef} label={"BHK"} placeholder={"2"} type={"number"}/>
-            {/* <AddPropertyInput refs={dateRef} label={"Star Date"}  type={"date"}/> */}
+              <PropertyInput
+                refs={areaRef}
+                label={"Area"}
+                placeholder={"area"}
+                type={"text"}
+              />
+              <PropertyInput
+                refs={priceRef}
+                label={"Price"}
+                placeholder={"1256"}
+                type={"number"}
+              />
+              <PropertyInput
+                refs={bhkRef}
+                label={"BHK"}
+                placeholder={"2"}
+                type={"number"}
+              />
             </div>
 
-            <AddPropertyInput refs={imageRef} label={"Image Link"} placeholder={""} type={"text"} />
+            <PropertyInput
+              refs={imageRef}
+              label={"Image Link"}
+              placeholder={""}
+              type={"text"}
+            />
           </div>
           <button
             type="submit"
@@ -89,4 +127,3 @@ import toast from "react-hot-toast";
     </>
   );
 }
-export default memo(AddProperty)

@@ -1,6 +1,6 @@
 import { memo } from "react"
 
- function AddPropertyInput({label,placeholder,type,refs}) {
+ function PropertyInput({label,placeholder,type,refs}) {
   return (
     <div className="flex flex-col gap-2">
     <label htmlFor="" className="text-lg">{label}</label>
@@ -9,4 +9,4 @@ import { memo } from "react"
   </div>
   )
 }
-export default memo(AddPropertyInput)
+export default memo(PropertyInput)

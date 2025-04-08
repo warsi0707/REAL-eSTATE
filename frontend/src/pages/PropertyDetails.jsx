@@ -2,12 +2,11 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { BackendUrl } from "../providers/Provider";
 import { useParams } from "react-router-dom";
 import Overview from "../components/Overview";
-import useContacts from "../hooks/useContacts";
+import Contact from "../components/Contact";
 
  function PropertyDetails() {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const {nameRef, emailRef, phoneRef,Contacts} = useContacts()
   const Property =useCallback( async () => {
     const response = await fetch(`${BackendUrl}/property/${id}`, {
       method: "GET",
@@ -80,36 +79,8 @@ import useContacts from "../hooks/useContacts";
             />
           </div>
         </div>
-
-        <div className="col-span-3 p-5 bg-white border h-72">
-          <h1 className="mb-5 text-xl">Contact seller</h1>
-          <div className="w-full space-y-2">
-            <input
-              ref={nameRef}
-              className="w-full p-2 border-b-2 rounded-md"
-              type="text"
-              placeholder="name"
-            />
-            <input
-              ref={emailRef}
-              className="w-full p-2 border-b-2 rounded-md"
-              type="email"
-              placeholder="Email"
-            />
-            <input
-              ref={phoneRef}
-              className="w-full p-2 border-b-2 rounded-md"
-              type="number"
-              placeholder="Phone"
-            />
-            <button
-              onClick={Contacts}
-              className="w-full p-2 mt-5 text-white transition-all duration-300 bg-purple-500 rounded-md hover:bg-purple-400"
-            >
-              Contact
-            </button>
-          </div>
-        </div>
+        
+    <Contact/>
       </div>
     </div>
   );

@@ -7,9 +7,8 @@ const { MONGO_URL } = require('./Config')
 const cookieParser = require('cookie-parser')
 const cors = require("cors")
 
-const { adminRoute } = require('./Routes/admin')
 const { propertyRoute } = require('./Routes/property')
-const { userRouter } = require('./Routes/user')
+const { userRoute } = require('./Routes/user')
 
 app.use(cors({
     origin: process.env.FRONTEND_URL,
@@ -22,9 +21,8 @@ app.use(express.static(path.join(__dirname,"frontend","dist")))
 app.get("/", (req, res) => {
     res.send("Hello world")
 })
-app.use("/api/v1/admin",adminRoute)
 app.use("/api/v1/property", propertyRoute)
-app.use("/api/v1/user", userRouter)
+app.use("/api/v1/user", userRoute)
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend','dist', 'index.html'))

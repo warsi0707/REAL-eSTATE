@@ -4,26 +4,7 @@ import { createContext, useCallback, useEffect, useState } from "react";
 const AuthContext = createContext()
 
 export  function Auth({children}){
-    const [isUserLogin, setIsUserLogin] = useState(false)
-    const [isAdminLogin, setIsAdminLogin] = useState(false)
-    const GetAdmin =useCallback( async()=>{
-        try{
-            const response = await fetch(`${BackendUrl}/admin/verify`,{
-                method: "GET",
-                credentials: 'include'
-            })
-            const result = await response.json()
-            if(response.ok){
-                if(result.adminAuthenticated == true){
-                    setIsAdminLogin(true)
-                }else{
-                    setIsAdminLogin(false)
-                }
-            }
-        }catch(error){
-            console.error(error)
-        }
-    },[])
+    const [isLogin, setIsLogin] = useState(false)
     const GetUser =useCallback( async()=>{
         try{
             const response = await fetch(`${BackendUrl}/user/verify`,{
@@ -32,10 +13,10 @@ export  function Auth({children}){
             })
             const result = await response.json()
             if(response.ok){
-                if(result.userAuthenticated == true){
-                    setIsUserLogin(true)
+                if(result.authenticated == true){
+                    setIsLogin(true)
                    }else{
-                    setIsUserLogin(false)
+                    setIsLogin(false)
                    }
             }
         }catch(error){
@@ -43,13 +24,12 @@ export  function Auth({children}){
         }
     },[])
     useEffect(()=>{
-            GetAdmin()
             GetUser()
     },[])
     
     return (
         <div>
-            <AuthContext.Provider value={{isUserLogin,isAdminLogin, setIsAdminLogin, setIsUserLogin }} >
+            <AuthContext.Provider value={{isLogin, setIsLogin }} >
                 {children}
             </AuthContext.Provider>
         </div>

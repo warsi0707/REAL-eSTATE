@@ -1,9 +1,8 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SellerNavbar from "./SellerNavbar";
-import { useRecoilState } from "recoil";
-import { messageAtom, successAtom } from "../atom/Atom";
 import { useNavigate, useParams } from "react-router-dom";
 import { BackendUrl } from "../providers/Provider";
+import toast from "react-hot-toast";
 
 export default function EditProperty() {
   const [title, setTitle] = useState("");
@@ -15,29 +14,30 @@ export default function EditProperty() {
   const [date, setDate] = useState("");
   const [sizes, setSizes] = useState("");
   const [area, setArea] = useState("");
-  const [message, setMessage] = useRecoilState(messageAtom);
-  const [success, setSuccess] = useRecoilState(successAtom);
   const navigate = useNavigate();
   const { id } = useParams();
 
   const FetchData = async () => {
-    const response = await fetch(`${BackendUrl}/admin/property/${id}`, {
-      method: "GET",
-      credentials: "include",
-    });
-    const result = await response.json();
-    if (response.ok) {
-      setTitle(result.properties.title);
-      setLocation(result.properties.location);
-      setCity(result.properties.city);
-      setPrice(result.properties.price);
-      setBhk(result.properties.bhk);
-      setImage(result.properties.image);
-      setSizes(result.properties.sizes);
-      setArea(result.properties.area);
-    } else {
-      setMessage(result.message);
-      setSuccess(false);
+    try {
+      const response = await fetch(`${BackendUrl}/user/property/${id}`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const result = await response.json();
+      if (response.ok) {
+        setTitle(result.properties.title);
+        setLocation(result.properties.location);
+        setCity(result.properties.city);
+        setPrice(result.properties.price);
+        setBhk(result.properties.bhk);
+        setImage(result.properties.image);
+        setSizes(result.properties.sizes);
+        setArea(result.properties.area);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
   useEffect(() => {
@@ -45,36 +45,37 @@ export default function EditProperty() {
   }, []);
 
   const EditData = async (e) => {
-    e.preventDefault();
-    const response = await fetch(`${BackendUrl}/admin/property/${id}`, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        location,
-        city,
-        price,
-        bhk,
-        image,
-        date,
-        sizes,
-        area,
-      }),
-    });
-    const result = await response.json();
-    if (response.ok) {
-      setMessage(result.message);
-      setSuccess(true);
-      setTimeout(() => {
-        setMessage("");
-        navigate("/seller/dashboard");
-      }, 2000);
-    } else {
-      setMessage(result.message);
-      setSuccess(false);
+    try {
+      e.preventDefault();
+      const response = await fetch(`${BackendUrl}/user/property/${id}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          location,
+          city,
+          price,
+          bhk,
+          image,
+          date,
+          sizes,
+          area,
+        }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        toast.success(result.message);
+        setTimeout(() => {
+          navigate("/seller/dashboard");
+        }, 2000);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -82,10 +83,6 @@ export default function EditProperty() {
     <>
       <SellerNavbar />
       <div className="p-5 mx-auto mt-10 bg-gray-400 rounded-lg max-w-[700px] py-8">
-        <div className="">
-          {message && <Message message={message} success={success} />}
-        </div>
-
         <form onSubmit={EditData} className="space-y-5">
           <div className="space-y-3">
             <div className="flex flex-col gap-2">

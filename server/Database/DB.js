@@ -1,26 +1,30 @@
 const mongoose = require("mongoose")
-const { number, string } = require("zod")
 
 
-const AdminSchema = new mongoose.Schema({
-    username: { type: String, unique: true, required: true },
+const UserSchema = new mongoose.Schema({
+    username: { type: String, unique: String, required: true },
     password: String,
+    property : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Property"
+    }]
 })
 const ContactSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    email: String,
-    phone: String
+    message: String,
+    phone: String,
+    property : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Property"
+    }
 })
-const UserSchema = new mongoose.Schema({
-    username: { type: String, unique: String, required: true },
-    password: String
-})
+
 
 const PropertySchema = new mongoose.Schema({
     title: { type: String, unique: true, required: true },
     postedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Admin"
+        ref: "User"
     },
     location: String,
     city: String,
@@ -32,23 +36,26 @@ const PropertySchema = new mongoose.Schema({
     area: String,
     launchDate: String,
     startDate: String,
-    rating: [
-        {
-            user: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User"
-            },
-            rating: Number
-        }
-    ]
+    // rating: [
+    //     {
+    //         user: {
+    //             type: mongoose.Schema.Types.ObjectId,
+    //             ref: "User"
+    //         },
+    //         rating: Number
+    //     }
+    // ],
+    contacts : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Contact'
+    }]
 })
-const Admin = mongoose.model("Admin", AdminSchema)
+
 const Contact = mongoose.model("Contact", ContactSchema)
 const User = mongoose.model("User", UserSchema)
 const Property = mongoose.model("Property", PropertySchema)
 
 module.exports = {
-    Admin,
     User,
     Property,
     Contact
